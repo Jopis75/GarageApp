@@ -29,6 +29,11 @@ namespace GarageClassLibrary
             vehicles[numberOfVehicles] = vehicle;
         }
 
+        public int CountVehicleTypes()
+        {
+            return 0;
+        }
+
         public Vehicle FindVehicle(string registrationNumber)
         {
             var index = FindVehicleIndex(registrationNumber);
@@ -38,7 +43,7 @@ namespace GarageClassLibrary
 
         private int FindVehicleIndex(string registrationNumber)
         {
-            var index = Array.FindIndex(vehicles, 0, v => v.RegistrationNumber == registrationNumber);
+            var index = Array.FindIndex(vehicles, 0, v => v.RegistrationNumber.Equals(registrationNumber, StringComparison.CurrentCultureIgnoreCase));
 
             if (index == -1)
             {
