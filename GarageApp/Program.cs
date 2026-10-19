@@ -495,7 +495,27 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
                 Console.WriteLine();
                 Console.WriteLine();
 
-                var registrationNumber = ConsoleHelper.ReadRegistrationNumber("Enter the registration number: ");
+                var registrationNumber = string.Empty;
+
+                while (true)
+                {
+                    registrationNumber = ConsoleHelper.ReadRegistrationNumber("Enter the registration number: ");
+
+                    try
+                    {
+                        var vehilce = garage.FindVehicle(registrationNumber);
+
+                        Console.WriteLine();
+                        ConsoleHelper.WriteErrorLine($"The registration number '{registrationNumber}' already exists.");
+                        Console.WriteLine();
+                        Console.WriteLine();
+                    }
+                    catch (VehicleNotFoundException ex)
+                    {
+                        break;
+                    }
+                }
+
                 var length = ConsoleHelper.ReadFloat("Enter the length in meters (> 0.0): ");
                 var numberOfSeats = ConsoleHelper.ReadInt("Enter the number of seats (> 0): ");
                 var numberOfEngines = ConsoleHelper.ReadInt("Enter the number of engines (> 0): ");
