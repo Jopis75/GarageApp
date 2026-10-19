@@ -16,6 +16,8 @@
 
         Vehicle FindVehicle(string registrationNumber);
 
+        string GetStatusInfoString();
+
         Vehicle RemoveVehicle(string registrationNumber);
     }
 }

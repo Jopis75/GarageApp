@@ -1,5 +1,6 @@
 ﻿using GarageClassLibrary.Exceptions;
 using GarageClassLibrary.Interfaces;
+using System.Diagnostics.Metrics;
 
 namespace GarageClassLibrary
 {
@@ -51,6 +52,26 @@ namespace GarageClassLibrary
             }
 
             return index;
+        }
+
+        public string GetStatusInfoString()
+        {
+            var infoLine = $"The garage has a total of {numberOfParkingSpaces} parking spaces.";
+
+            if (IsEmpty)
+            {
+                infoLine += " The garage is empty.";
+            }
+            else if (IsFull)
+            {
+                infoLine += " The garage is full.";
+            }
+            else
+            {
+                infoLine += " And there are currently {garage.NumberOfVehicles} vehicles in the garage.";
+            }
+
+            return infoLine;
         }
 
         private Vehicle RemoveVehicle(int index)
