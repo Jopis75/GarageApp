@@ -16,5 +16,7 @@ namespace GarageClassLibrary
         public int NumberOfSeats { get { return numberOfSeats; } set { numberOfSeats = value; } }
 
         public string RegistrationNumber { get { return registrationNumber; } }
+
+        public int NumberOfOccupiedParkingSpaces => throw new NotImplementedException();
     }
 }

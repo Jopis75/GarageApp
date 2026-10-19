@@ -14,6 +14,8 @@ namespace GarageClassLibrary.Interfaces
 
         int NumberOfSeats { get; }
 
+        int NumberOfOccupiedParkingSpaces { get; }
+
         string RegistrationNumber { get; }
     }
 }
