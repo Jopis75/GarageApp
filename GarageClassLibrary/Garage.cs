@@ -22,12 +22,12 @@ namespace GarageClassLibrary
         {
             if (IsFull)
             {
-                throw new InvalidOperationException("The garage is full.");
+                throw new IndexOutOfRangeException("The garage is full.");
             }
 
-            numberOfVehicles++;
-
             vehicles[numberOfVehicles] = vehicle;
+
+            numberOfVehicles++;
         }
 
         public int CountVehicleTypes()
@@ -68,7 +68,7 @@ namespace GarageClassLibrary
             }
             else
             {
-                infoLine += " And there are currently {garage.NumberOfVehicles} vehicles in the garage.";
+                infoLine += $" There are currently {numberOfVehicles}" + (numberOfVehicles == 1 ? " vehicle" : " vehicles") + " in the garage.";
             }
 
             return infoLine;
@@ -100,7 +100,7 @@ namespace GarageClassLibrary
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The garage is empty.");
+                throw new IndexOutOfRangeException("The garage is empty.");
             }
 
             var index = FindVehicleIndex(registrationNumber);
