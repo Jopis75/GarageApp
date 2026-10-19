@@ -6,8 +6,6 @@
 
         int NumberOfVehicles { get; }
 
-        IEnumerable<Vehicle> Vehicles { get; }
-
         void AddVehicle(Vehicle vehicle);
 
         Vehicle FindVehicle(string registrationNumber);

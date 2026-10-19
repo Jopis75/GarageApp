@@ -17,9 +17,6 @@ namespace GarageClassLibrary
 
         public int NumberOfVehicles => numberOfVehicles;
 
-        public IEnumerable<Vehicle> Vehicles => vehicles;
-
-
         public void AddVehicle(Vehicle vehicle)
         {
             if (IsFull)
@@ -66,7 +63,7 @@ namespace GarageClassLibrary
                 }
             }
 
-            Array.Copy(tempVehicles, vehicles, tempVehicles.Count());
+            Array.Copy(tempVehicles, vehicles, tempVehicles.Length);
 
             numberOfVehicles--;
 
