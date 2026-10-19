@@ -5,23 +5,6 @@ namespace GarageApp.Helpers
 {
     public static class ConsoleHelper
     {
-
-        public static bool ReadContinue(string prompt)
-        {
-            var continueInput = string.Empty;
-            
-            do
-            {
-                Console.Write(prompt);
-                continueInput = Console.ReadLine();
-            }
-            while (continueInput != null
-                && continueInput.Equals("y", StringComparison.CurrentCultureIgnoreCase) == false
-                && continueInput.Equals("n", StringComparison.CurrentCultureIgnoreCase) == false);
-
-            return continueInput!.Equals("y", StringComparison.CurrentCultureIgnoreCase);
-        }
-
         public static float ReadFloat(string prompt)
         {
             var floatInput = string.Empty;
@@ -67,23 +50,6 @@ namespace GarageApp.Helpers
             return @int;
         }
 
-        public static int ReadNumberOfParkingSpaces(string prompt)
-        {
-            var numberOfParkingSpacesInput = string.Empty;
-            var numberOfParkingSpaces = 0;
-
-            WriteGarageAppWelcomeInfo();
-
-            do
-            {
-                Console.Write(prompt);
-                numberOfParkingSpacesInput = Console.ReadLine();
-            }
-            while (int.TryParse(numberOfParkingSpacesInput, out numberOfParkingSpaces) == false || numberOfParkingSpaces < 1 || numberOfParkingSpaces > int.MaxValue);
-
-            return numberOfParkingSpaces;
-        }
-
         public static string ReadRegistrationNumber(string prompt)
         {
             var registrationNumber = string.Empty;
@@ -96,6 +62,22 @@ namespace GarageApp.Helpers
             while (registrationNumber != null && RegistrationNumberValidator.Validate(registrationNumber) == false);
 
             return registrationNumber!;
+        }
+
+        public static bool ReadYesNoAnswer(string prompt)
+        {
+            var answerInput = string.Empty;
+
+            do
+            {
+                Console.Write(prompt);
+                answerInput = Console.ReadLine();
+            }
+            while (answerInput != null
+                && answerInput.Equals("y", StringComparison.CurrentCultureIgnoreCase) == false
+                && answerInput.Equals("n", StringComparison.CurrentCultureIgnoreCase) == false);
+
+            return answerInput!.Equals("y", StringComparison.CurrentCultureIgnoreCase);
         }
 
         public static void WriteErrorLine(string message)

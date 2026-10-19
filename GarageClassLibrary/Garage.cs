@@ -1,6 +1,6 @@
-﻿using GarageClassLibrary.Exceptions;
+﻿using GarageClassLibrary.Enums;
+using GarageClassLibrary.Exceptions;
 using GarageClassLibrary.Interfaces;
-using System.Diagnostics.Metrics;
 
 namespace GarageClassLibrary
 {
@@ -30,9 +30,21 @@ namespace GarageClassLibrary
             numberOfVehicles++;
         }
 
-        public int CountVehicleTypes()
+        public int CountVehicleType(VehicleType vehicleType)
         {
-            return 0;
+            var vehicleTypeName = vehicleType.ToString();
+
+            var count = 0;
+
+            for (var i = 0; i < numberOfVehicles; i++)
+            {
+                if (vehicles[i].GetType().Name == vehicleTypeName)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         public Vehicle FindVehicle(string registrationNumber)
@@ -44,11 +56,11 @@ namespace GarageClassLibrary
 
         private int FindVehicleIndex(string registrationNumber)
         {
-            var index = Array.FindIndex(vehicles, 0, v => v.RegistrationNumber.Equals(registrationNumber, StringComparison.CurrentCultureIgnoreCase));
+            var index = Array.FindIndex(vehicles, 0, v => v != null && v.RegistrationNumber.Equals(registrationNumber, StringComparison.CurrentCultureIgnoreCase));
 
             if (index == -1)
             {
-                throw new NotFoundException($"Could not find vehicle with registration number {registrationNumber}.");
+                throw new VehicleNotFoundException(registrationNumber);
             }
 
             return index;
@@ -108,6 +120,37 @@ namespace GarageClassLibrary
             var vehicle = RemoveVehicle(index);
 
             return vehicle;
+        }
+
+        public static void WriteVehicle(MotorVehicle motorVehicle)
+        {
+            Console.WriteLine($"Vehicle type: {motorVehicle.GetType().Name}");
+            Console.WriteLine($"Registration number: {motorVehicle.RegistrationNumber}");
+            Console.WriteLine($"Length: {motorVehicle.Length}");
+            Console.WriteLine($"Number of seats: {motorVehicle.NumberOfSeats}");
+            Console.WriteLine($"Number of engines: {motorVehicle.NumberOfEngines}");
+            Console.WriteLine($"Cylinder volumne: {motorVehicle.CylinderVolume}");
+            Console.WriteLine($"Fuel type: {motorVehicle.FuelType}");
+        }
+
+        public void WriteVehicles()
+        {
+            var i = 0;
+            for (; i < numberOfVehicles - 1; i++)
+            {
+                WriteVehicle(vehicles[i] as MotorVehicle);
+                Console.WriteLine();
+            }
+
+            WriteVehicle(vehicles[i] as MotorVehicle);
+        }
+
+        public void WriteVehicleTypeInfo(VehicleType vehicleType)
+        {
+            var count = CountVehicleType(vehicleType);
+
+            Console.WriteLine($"Vehicle type: {vehicleType}");
+            Console.WriteLine($"Count: {count}");
         }
     }
 

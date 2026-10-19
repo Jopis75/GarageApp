@@ -1,4 +1,6 @@
-﻿namespace GarageClassLibrary.Interfaces
+﻿using GarageClassLibrary.Enums;
+
+namespace GarageClassLibrary.Interfaces
 {
     public interface IGarage
     {
@@ -12,12 +14,16 @@
 
         void AddVehicle(Vehicle vehicle);
 
-        int CountVehicleTypes();
+        int CountVehicleType(VehicleType vehicleType);
 
         Vehicle FindVehicle(string registrationNumber);
 
         string GetStatusInfoString();
 
         Vehicle RemoveVehicle(string registrationNumber);
+
+        void WriteVehicles();
+
+        void WriteVehicleTypeInfo(VehicleType vehicleType);
     }
 }

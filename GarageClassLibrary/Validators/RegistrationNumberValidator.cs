@@ -6,10 +6,9 @@ namespace GarageClassLibrary.Validators
     {
         public static bool Validate(string registrationNumber)
         {
-            //Regex regex = new Regex("^[A-HJ-NP-PR-TV-Z]{3}\\s?[0-9]{2}[0-9A-HJ-NP-PR-TV-Z]$\r\n");
+            Regex regex = new Regex("^[A-HJ-NP-PR-TV-Z]{3}\\s?[0-9]{2}[0-9A-HJ-NP-PR-TV-Z]$");
 
-            //return regex.IsMatch(registrationNumber);
-            return true;
+            return regex.IsMatch(registrationNumber);
         }
     }
 }
