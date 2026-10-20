@@ -45,10 +45,61 @@ namespace UnitTests
             garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
 
             // Act
-            var vehicle = garage.FindVehicleByRegistrationNumber("ABC 12A");
+            var foundVehicle = garage.FindVehicleByRegistrationNumber("ABC 12A");
 
             // Assert
-            Assert.Equal("ABC 12A", vehicle.RegistrationNumber);
+            Assert.Equal("ABC 12A", foundVehicle.RegistrationNumber);
+        }
+
+        [Fact]
+        public void TestFindVehiclesByNumberOfSeats()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f));
+
+            // Act
+            var foundVehicles = garage.FindVehiclesByNumberOfSeats(2);
+
+            // Assert
+            Assert.Single(foundVehicles);
+            Assert.Equal("RTH 09T", foundVehicles[0].RegistrationNumber);
+        }
+
+        [Fact]
+        public void TestFindVehiclesByVehicleType()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f));
+
+            // Act
+            var foundVehicles = garage.FindVehiclesByVehicleType(VehicleType.Truck);
+
+            // Assert
+            Assert.Single(foundVehicles);
+            Assert.Equal("RTH 09T", foundVehicles[0].RegistrationNumber);
+        }
+
+        [Fact]
+        public void TestFindVehiclesByVehicleTypeAndFuelType()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f));
+
+            // Act
+            var foundVehicles = garage.FindVehiclesByVehicleTypeAndFuelType(VehicleType.Truck, FuelType.Gasoline);
+
+            // Assert
+            Assert.Single(foundVehicles);
+            Assert.Equal("RTH 09T", foundVehicles[0].RegistrationNumber);
         }
 
         [Fact]
