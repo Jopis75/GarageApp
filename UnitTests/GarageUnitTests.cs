@@ -4,7 +4,7 @@ using GarageClassLibrary.Interfaces;
 
 namespace UnitTests
 {
-    public class GarageUnitTest
+    public class GarageUnitTests
     {
         [Fact]
         public void TestAddVehicle()
