@@ -3,7 +3,6 @@ using GarageClassLibrary;
 using GarageClassLibrary.Enums;
 using GarageClassLibrary.Exceptions;
 using GarageClassLibrary.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var garage = HandleCreateGarage();
 
@@ -25,7 +24,7 @@ static IGarage HandleCreateGarage()
 
         Console.WriteLine();
 
-        var answer = ConsoleHelper.ReadYesNoAnswer("Do you want to pre populate the garage ('y', 'n')? ");
+        var answer = ConsoleHelper.ReadYesNo("Do you want to add some vehicles to the garage ('y', 'n')? ");
 
         if (answer == true)
         {
@@ -49,10 +48,8 @@ static IGarage HandleCreateGarage()
                     Console.WriteLine();
                     ConsoleHelper.WriteErrorLine($"An error occurred while adding the vehicle: {ex.Message}");
                     Console.WriteLine();
-                    Console.WriteLine();
                     Console.Write("Press any key to continue...");
                     Console.ReadKey();
-                    continue;
                 }
             }
         }
@@ -63,7 +60,6 @@ static IGarage HandleCreateGarage()
     {
         Console.WriteLine();
         ConsoleHelper.WriteErrorLine($"An unexpected error has occurred: {ex.Message}");
-        Console.WriteLine();
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
@@ -95,13 +91,12 @@ static void HandleRemoveVehicle(IGarage garage)
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
-                Console.WriteLine();
 
-                Console.WriteLine("Which vehicle do you want to remove?");
+                Console.WriteLine("Remove vehicle from garage");
+                Console.WriteLine("--------------------------");
                 Console.WriteLine();
 
                 ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
-                Console.WriteLine();
                 Console.WriteLine();
                 Console.Write("Press any key to continue...");
                 Console.ReadKey();
@@ -115,9 +110,9 @@ static void HandleRemoveVehicle(IGarage garage)
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
-                Console.WriteLine();
 
-                Console.WriteLine("Which vehicle do you want to remove?");
+                Console.WriteLine("Remove vehicle from garage");
+                Console.WriteLine("--------------------------");
                 Console.WriteLine();
 
                 var registrationNumber = ConsoleHelper.ReadRegistrationNumber("Enter the registration number: ");
@@ -130,18 +125,16 @@ static void HandleRemoveVehicle(IGarage garage)
 
                     Console.WriteLine();
                     ConsoleHelper.WriteSuccessLine("The vehicle was removed successfully.");
-                    Console.WriteLine();
                 }
                 catch (VehicleNotFoundException ex)
                 {
                     Console.WriteLine();
                     ConsoleHelper.WriteErrorLine($"The vehicle was not found: {ex.Message}");
-                    Console.WriteLine();
                 }
 
                 Console.WriteLine();
 
-                var @continue = ConsoleHelper.ReadYesNoAnswer("Do you want to remove another ('y', 'n')? ");
+                var @continue = ConsoleHelper.ReadYesNo("Do you want to remove another ('y', 'n')? ");
 
                 if (@continue == false)
                 {
@@ -155,75 +148,14 @@ static void HandleRemoveVehicle(IGarage garage)
         Console.WriteLine();
         ConsoleHelper.WriteErrorLine($"An unexpected error has occurred: {ex.Message}");
         Console.WriteLine();
-        Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
     }
 }
 
-static void HandleFindVehicle(IGarage garage)
+static void HandleFindVehicles(IGarage garage)
 {
-    if (garage.IsEmpty)
-    {
-        Console.Clear();
-
-        ConsoleHelper.WriteGarageAppWelcomeInfo();
-        ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
-
-        Console.WriteLine();
-        Console.WriteLine();
-
-        Console.WriteLine("Which vehicle do you want to find?");
-        Console.WriteLine();
-
-        ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.Write("Press any key to continue...");
-        Console.ReadKey();
-    }
-    else
-    {
-        while (true)
-        {
-            Console.Clear();
-
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
-            ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
-
-            Console.WriteLine();
-            Console.WriteLine();
-
-            Console.WriteLine("Which vehicle do you want to find?");
-            Console.WriteLine();
-
-            var registrationNumber = ConsoleHelper.ReadRegistrationNumber("Enter the registration number: ");
-
-            try
-            {
-                var vehicle = garage.FindVehicle(registrationNumber);
-
-                Console.WriteLine();
-
-                vehicle.Write();
-            }
-            catch (VehicleNotFoundException ex)
-            {
-                Console.WriteLine();
-                ConsoleHelper.WriteErrorLine($"The vehicle was not found: {ex.Message}");
-                Console.WriteLine();
-            }
-
-            Console.WriteLine();
-
-            var answer = ConsoleHelper.ReadYesNoAnswer("Do you want to find another ('y', 'n')? ");
-
-            if (answer == false)
-            {
-                break;
-            }
-        }
-    }
+    ReadFindVehiclesMenuSelection(garage);
 }
 
 static void HandleListVehicles(IGarage garage)
@@ -236,13 +168,12 @@ static void HandleListVehicles(IGarage garage)
         ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
         Console.WriteLine();
-        Console.WriteLine();
 
-        Console.WriteLine("This is the list of vehicles.");
+        Console.WriteLine("List vehicles in garage");
+        Console.WriteLine("-----------------------");
         Console.WriteLine();
 
         ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
-        Console.WriteLine();
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
@@ -255,14 +186,13 @@ static void HandleListVehicles(IGarage garage)
         ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
         Console.WriteLine();
-        Console.WriteLine();
 
-        Console.WriteLine("This is the list of vehicles.");
+        Console.WriteLine("List vehicles in garage");
+        Console.WriteLine("-----------------------");
         Console.WriteLine();
 
         garage.WriteVehicles();
 
-        Console.WriteLine();
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
@@ -279,13 +209,12 @@ static void HandleListVehicleTypes(IGarage garage)
         ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
         Console.WriteLine();
-        Console.WriteLine();
 
-        Console.WriteLine("This is the list of vehicle types.");
+        Console.WriteLine("List vehicle types in garage");
+        Console.WriteLine("----------------------------");
         Console.WriteLine();
 
         ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
-        Console.WriteLine();
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
@@ -298,27 +227,27 @@ static void HandleListVehicleTypes(IGarage garage)
         ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
         Console.WriteLine();
+
+        Console.WriteLine("List vehicle types in garage");
+        Console.WriteLine("----------------------------");
         Console.WriteLine();
 
-        Console.WriteLine("This is the list of vehicle types.");
+        garage.WriteVehicleTypeCount(VehicleType.Motorcycle);
         Console.WriteLine();
 
-        garage.WriteVehicleTypeInfo(VehicleType.Motorcycle);
+        garage.WriteVehicleTypeCount(VehicleType.Car);
         Console.WriteLine();
 
-        garage.WriteVehicleTypeInfo(VehicleType.Car);
+        garage.WriteVehicleTypeCount(VehicleType.Truck);
         Console.WriteLine();
 
-        garage.WriteVehicleTypeInfo(VehicleType.Truck);
+        garage.WriteVehicleTypeCount(VehicleType.Bus);
         Console.WriteLine();
 
-        garage.WriteVehicleTypeInfo(VehicleType.Bus);
+        garage.WriteVehicleTypeCount(VehicleType.Boat);
         Console.WriteLine();
 
-        garage.WriteVehicleTypeInfo(VehicleType.Boat);
-        Console.WriteLine();
-
-        garage.WriteVehicleTypeInfo(VehicleType.Airplane);
+        garage.WriteVehicleTypeCount(VehicleType.Airplane);
         Console.WriteLine();
 
         Console.WriteLine();
@@ -340,13 +269,12 @@ static void ReadMainMenuSelection(IGarage garage)
         ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
         Console.WriteLine();
-        Console.WriteLine();
 
         Console.WriteLine("What do you want to do?");
         Console.WriteLine();
         Console.WriteLine("1. Add a vehicle to the garage.");
         Console.WriteLine("2. Remove a vehicle from the garage.");
-        Console.WriteLine("3. Find a vehicle in the garage.");
+        Console.WriteLine("3. Find vehicle(s) in the garage.");
         Console.WriteLine("4. List all vehicles in the garage.");
         Console.WriteLine("5. List all vehicle types in the garage.");
         Console.WriteLine("6. Quit.");
@@ -364,7 +292,7 @@ static void ReadMainMenuSelection(IGarage garage)
                 HandleRemoveVehicle(garage);
                 break;
             case "3":
-                HandleFindVehicle(garage);
+                HandleFindVehicles(garage);
                 break;
             case "4":
                 HandleListVehicles(garage);
@@ -383,7 +311,7 @@ static void ReadAddVehicleMenuSelection(IGarage garage)
 {
     var exit = false;
 
-    while (!exit)
+    while (exit == false)
     {
         if (garage.IsFull)
         {
@@ -393,13 +321,11 @@ static void ReadAddVehicleMenuSelection(IGarage garage)
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
-            Console.WriteLine();
 
             Console.WriteLine("What type of vehicle do you want to add?");
             Console.WriteLine();
 
             ConsoleHelper.WriteInfoLine("The garage is full.");
-            Console.WriteLine();
             Console.WriteLine();
             Console.Write("Press any key to continue...");
             Console.ReadKey();
@@ -413,10 +339,10 @@ static void ReadAddVehicleMenuSelection(IGarage garage)
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
-            Console.WriteLine();
 
             Console.WriteLine("What type of vehicle do you want to add?");
             Console.WriteLine();
+
             Console.WriteLine("1. A bicycle.");
             Console.WriteLine("2. A motorcycle.");
             Console.WriteLine("3. A car.");
@@ -461,6 +387,49 @@ static void ReadAddVehicleMenuSelection(IGarage garage)
     }
 }
 
+static void ReadFindVehiclesMenuSelection(IGarage garage)
+{
+    var exit = false;
+
+    while (exit == false)
+    {
+        Console.Clear();
+
+        ConsoleHelper.WriteGarageAppWelcomeInfo();
+        ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+        Console.WriteLine();
+
+        Console.WriteLine("How do you want to find the vehicles?");
+        Console.WriteLine();
+
+        Console.WriteLine("1. Find by registration number.");
+        Console.WriteLine("2. Find by vehicle type.");
+        Console.WriteLine("3. Find by vehicle type and fuel type.");
+        Console.WriteLine("4. Exit to Main menu.");
+        Console.WriteLine();
+        Console.Write("Enter your selection: ");
+
+        var selection = Console.ReadLine();
+
+        switch (selection)
+        {
+            case "1":
+                FindVehicleByRegistrationNumber(garage);
+                break;
+            case "2":
+                FindByVehicleType(garage);
+                break;
+            case "3":
+                //AddMotorVehicle(garage, MotorVehicleType.Car);
+                break;
+            case "4":
+                exit = true;
+                break;
+        }
+    }
+}
+
 static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
 {
     try
@@ -475,9 +444,9 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
-                Console.WriteLine();
 
-                Console.WriteLine("What type of vehicle do you want to add?");
+                Console.WriteLine("Add vehicle to garage");
+                Console.WriteLine("---------------------");
                 Console.WriteLine();
 
                 ConsoleHelper.WriteInfoLine("The garage is full.");
@@ -495,6 +464,9 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
+
+                Console.WriteLine("Add vehicle to garage");
+                Console.WriteLine("---------------------");
                 Console.WriteLine();
 
                 var registrationNumber = string.Empty;
@@ -505,14 +477,13 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
 
                     try
                     {
-                        var vehilce = garage.FindVehicle(registrationNumber);
+                        var vehilce = garage.FindVehicleByRegistrationNumber(registrationNumber);
 
                         Console.WriteLine();
                         ConsoleHelper.WriteErrorLine($"The registration number '{registrationNumber}' already exists.");
                         Console.WriteLine();
-                        Console.WriteLine();
                     }
-                    catch (VehicleNotFoundException ex)
+                    catch (VehicleNotFoundException)
                     {
                         break;
                     }
@@ -524,7 +495,7 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
                 var numberOfSeats = ConsoleHelper.ReadInt("Enter the number of seats (> 0): ");
                 var numberOfEngines = ConsoleHelper.ReadInt("Enter the number of engines (> 0): ");
                 var cylinderVolume = ConsoleHelper.ReadFloat("Enter the cylinder volume (> 0.0): ");
-                var fuelType = ConsoleHelper.ReadFuelType("Enter the fuel type ('Gasoline', 'Diesel'): ");
+                var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
 
                 if (motorVehicleType == MotorVehicleType.Motorcycle)
                 {
@@ -566,24 +537,22 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
                 try
                 {
                     garage.AddVehicle(vehicle);
+
+                    Console.WriteLine();
+                    ConsoleHelper.WriteSuccessLine("The vehicle was added successfully.");
+                    Console.WriteLine();
                 }
                 catch (IndexOutOfRangeException ex)
                 {
                     Console.WriteLine();
                     ConsoleHelper.WriteErrorLine($"An error occurred while adding the vehicle: {ex.Message}");
                     Console.WriteLine();
-                    Console.WriteLine();
                     Console.Write("Press any key to continue...");
                     Console.ReadKey();
                     break;
                 }
 
-                Console.WriteLine();
-                ConsoleHelper.WriteSuccessLine("The vehicle was added successfully.");
-                Console.WriteLine();
-                Console.WriteLine();
-
-                var answer = ConsoleHelper.ReadYesNoAnswer("Do you want to add another ('y', 'n')? ");
+                var answer = ConsoleHelper.ReadYesNo("Do you want to add another ('y', 'n')? ");
 
                 if (answer == false)
                 {
@@ -597,8 +566,140 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
         Console.WriteLine();
         ConsoleHelper.WriteErrorLine($"An unexpected error has occurred: {ex.Message}");
         Console.WriteLine();
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+    }
+}
+
+static void FindVehicleByRegistrationNumber(IGarage garage)
+{
+    if (garage.IsEmpty)
+    {
+        Console.Clear();
+
+        ConsoleHelper.WriteGarageAppWelcomeInfo();
+        ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+        Console.WriteLine();
+
+        Console.WriteLine("Find vehicle by registration number");
+        Console.WriteLine("-----------------------------------");
+        Console.WriteLine();
+
+        ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+        Console.WriteLine();
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+    }
+    else
+    {
+        while (true)
+        {
+            Console.Clear();
+
+            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+            Console.WriteLine();
+
+            Console.WriteLine("Find vehicle by registration number");
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine();
+
+            var registrationNumber = ConsoleHelper.ReadRegistrationNumber("Enter the registration number: ");
+
+            try
+            {
+                var vehicle = garage.FindVehicleByRegistrationNumber(registrationNumber);
+
+                Console.WriteLine();
+
+                vehicle.Write();
+            }
+            catch (VehicleNotFoundException ex)
+            {
+                Console.WriteLine();
+                ConsoleHelper.WriteErrorLine($"The vehicle was not found: {ex.Message}");
+            }
+
+            Console.WriteLine();
+
+            var answer = ConsoleHelper.ReadYesNo("Do you want to find another ('y', 'n')? ");
+
+            if (answer == false)
+            {
+                break;
+            }
+        }
+    }
+}
+
+static void FindByVehicleType(IGarage garage)
+{
+    if (garage.IsEmpty)
+    {
+        Console.Clear();
+
+        ConsoleHelper.WriteGarageAppWelcomeInfo();
+        ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+        Console.WriteLine();
+
+        Console.WriteLine("Find vehicle(s) by vehicle type");
+        Console.WriteLine("-------------------------------");
+        Console.WriteLine();
+
+        ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+    }
+    else
+    {
+        while (true)
+        {
+            Console.Clear();
+
+            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+            Console.WriteLine();
+
+            Console.WriteLine("Find vehicle(s) by vehicle type");
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine();
+
+            var motorVehicleType = ConsoleHelper.ReadEnum<MotorVehicleType>("Enter the vehicle type ('Motorcycle', 'Car', 'Truck'): ");
+
+            var vehicles = garage.FindVehiclesByMotorVehicleType(motorVehicleType);
+
+            Console.WriteLine();
+
+            if (vehicles.Length > 0)
+            {
+                ConsoleHelper.WriteInfoLine($"Found {vehicles.Length} vehicles with vehicle type '{motorVehicleType}'.");
+                Console.WriteLine();
+
+                foreach (var vehicle in vehicles)
+                {
+                    vehicle.Write();
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                ConsoleHelper.WriteInfoLine($"Could not find any vehicles with vehicle type '{motorVehicleType}'.");
+                Console.WriteLine();
+            }
+
+            var answer = ConsoleHelper.ReadYesNo("Do you want to find another ('y', 'n')? ");
+
+            if (answer == false)
+            {
+                break;
+            }
+        }
     }
 }

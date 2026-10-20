@@ -16,7 +16,9 @@ namespace GarageClassLibrary.Interfaces
 
         int CountVehicleType(VehicleType vehicleType);
 
-        Vehicle FindVehicle(string registrationNumber);
+        Vehicle[] FindVehiclesByMotorVehicleType(MotorVehicleType motorVehicleType);
+
+        Vehicle FindVehicleByRegistrationNumber(string registrationNumber);
 
         string GetStatusInfoString();
 
@@ -24,6 +26,6 @@ namespace GarageClassLibrary.Interfaces
 
         void WriteVehicles();
 
-        void WriteVehicleTypeInfo(VehicleType vehicleType);
+        void WriteVehicleTypeCount(VehicleType vehicleType);
     }
 }

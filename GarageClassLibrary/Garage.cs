@@ -47,14 +47,21 @@ namespace GarageClassLibrary
             return count;
         }
 
-        public Vehicle FindVehicle(string registrationNumber)
+        public Vehicle FindVehicleByRegistrationNumber(string registrationNumber)
         {
-            var index = FindVehicleIndex(registrationNumber);
+            var index = FindVehicleIndexByRegistrationNumber(registrationNumber);
 
             return vehicles[index];
         }
 
-        private int FindVehicleIndex(string registrationNumber)
+        public Vehicle[] FindVehiclesByMotorVehicleType(MotorVehicleType motorVehicleType)
+        {
+            var foundVehicles = Array.FindAll(vehicles, v => v != null && v.GetType().Name.Equals(motorVehicleType.ToString()));
+
+            return foundVehicles;
+        }
+
+        private int FindVehicleIndexByRegistrationNumber(string registrationNumber)
         {
             var index = Array.FindIndex(vehicles, 0, v => v != null && v.RegistrationNumber.Equals(registrationNumber, StringComparison.CurrentCultureIgnoreCase));
 
@@ -115,37 +122,23 @@ namespace GarageClassLibrary
                 throw new IndexOutOfRangeException("The garage is empty.");
             }
 
-            var index = FindVehicleIndex(registrationNumber);
+            var index = FindVehicleIndexByRegistrationNumber(registrationNumber);
 
             var vehicle = RemoveVehicle(index);
 
             return vehicle;
         }
 
-        public static void WriteVehicle(MotorVehicle motorVehicle)
-        {
-            Console.WriteLine($"Vehicle type: {motorVehicle.GetType().Name}");
-            Console.WriteLine($"Registration number: {motorVehicle.RegistrationNumber}");
-            Console.WriteLine($"Length: {motorVehicle.Length}");
-            Console.WriteLine($"Number of seats: {motorVehicle.NumberOfSeats}");
-            Console.WriteLine($"Number of engines: {motorVehicle.NumberOfEngines}");
-            Console.WriteLine($"Cylinder volumne: {motorVehicle.CylinderVolume}");
-            Console.WriteLine($"Fuel type: {motorVehicle.FuelType}");
-        }
-
         public void WriteVehicles()
         {
-            var i = 0;
-            for (; i < numberOfVehicles - 1; i++)
+            for (var i = 0; i < numberOfVehicles; i++)
             {
                 vehicles[i].Write();
                 Console.WriteLine();
             }
-
-            vehicles[i].Write();
         }
 
-        public void WriteVehicleTypeInfo(VehicleType vehicleType)
+        public void WriteVehicleTypeCount(VehicleType vehicleType)
         {
             var count = CountVehicleType(vehicleType);
 
@@ -153,8 +146,4 @@ namespace GarageClassLibrary
             Console.WriteLine($"Count: {count}");
         }
     }
-
-    // 0 1 2 3 4 5 - - -
-    // 0 1 2 4 5 - - - -
-    //
 }

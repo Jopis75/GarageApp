@@ -1,10 +1,24 @@
-﻿using GarageClassLibrary.Enums;
-using GarageClassLibrary.Validators;
+﻿using GarageClassLibrary.Validators;
 
 namespace GarageApp.Helpers
 {
     public static class ConsoleHelper
     {
+        public static TEnum ReadEnum<TEnum>(string prompt) where TEnum : struct
+        {
+            var enumInput = string.Empty;
+            TEnum @enum;
+
+            do
+            {
+                Console.Write(prompt);
+                enumInput = Console.ReadLine();
+            }
+            while (Enum.TryParse<TEnum>(enumInput, out @enum) == false);
+
+            return @enum;
+        }
+
         public static float ReadFloat(string prompt)
         {
             var floatInput = string.Empty;
@@ -18,21 +32,6 @@ namespace GarageApp.Helpers
             while (float.TryParse(floatInput, out @float) == false || !(@float > 0.0f) || @float > float.MaxValue);
 
             return @float;
-        }
-
-        public static FuelType ReadFuelType(string prompt)
-        {
-            var fuelTypeInput = string.Empty;
-            FuelType fuelType;
-
-            do
-            {
-                Console.Write(prompt);
-                fuelTypeInput = Console.ReadLine();
-            }
-            while (Enum.TryParse<FuelType>(fuelTypeInput, out fuelType) == false);
-
-            return fuelType;
         }
 
         public static int ReadInt(string prompt)
@@ -59,12 +58,12 @@ namespace GarageApp.Helpers
                 Console.Write(prompt);
                 registrationNumber = Console.ReadLine();
             }
-            while (registrationNumber != null && RegistrationNumberValidator.Validate(registrationNumber) == false);
+            while (registrationNumber != null && RegistrationNumberValidator.Validate(registrationNumber.ToUpper()) == false);
 
             return registrationNumber!;
         }
 
-        public static bool ReadYesNoAnswer(string prompt)
+        public static bool ReadYesNo(string prompt)
         {
             var answerInput = string.Empty;
 
@@ -86,6 +85,7 @@ namespace GarageApp.Helpers
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(message);
             Console.ResetColor();
+            Console.WriteLine();
         }
 
         public static void WriteGarageAppWelcomeInfo()
@@ -111,6 +111,7 @@ namespace GarageApp.Helpers
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(message);
             Console.ResetColor();
+            Console.WriteLine();
         }
 
         public static void WriteSuccessLine(string message)
@@ -119,6 +120,7 @@ namespace GarageApp.Helpers
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(message);
             Console.ResetColor();
+            Console.WriteLine();
         }
     }
 }
