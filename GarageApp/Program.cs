@@ -409,7 +409,8 @@ static void ReadFindVehiclesMenuSelection(IGarage garage)
             Console.WriteLine("1. Find by registration number.");
             Console.WriteLine("2. Find by vehicle type.");
             Console.WriteLine("3. Find by vehicle type and fuel type.");
-            Console.WriteLine("4. Exit to Main menu.");
+            Console.WriteLine("4. Find by number of seats.");
+            Console.WriteLine("5. Exit to Main menu.");
             Console.WriteLine();
             Console.Write("Enter your selection: ");
 
@@ -421,12 +422,15 @@ static void ReadFindVehiclesMenuSelection(IGarage garage)
                     FindVehicleByRegistrationNumber(garage);
                     break;
                 case "2":
-                    FindByVehicleType(garage);
+                    FindVehiclesByVehicleType(garage);
                     break;
                 case "3":
-                    FindByVehicleTypeAndFuelType(garage);
+                    FindVehiclesByVehicleTypeAndFuelType(garage);
                     break;
                 case "4":
+                    FindVehiclesByNumberOfSeats(garage);
+                    break;
+                case "5":
                     exit = true;
                     break;
             }
@@ -651,6 +655,86 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
     }
 }
 
+static void FindVehiclesByNumberOfSeats(IGarage garage)
+{
+    try
+    {
+        if (garage.IsEmpty)
+        {
+            Console.Clear();
+
+            WriteGarageAppWelcomeInfo();
+            ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+            Console.WriteLine();
+
+            Console.WriteLine("Find vehicle(s) by number of seats");
+            Console.WriteLine("----------------------------------");
+            Console.WriteLine();
+
+            ConsoleHelper.WriteInfoLine("The garage is empty.");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
+        }
+        else
+        {
+            while (true)
+            {
+                Console.Clear();
+
+                WriteGarageAppWelcomeInfo();
+                ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+                Console.WriteLine();
+
+                Console.WriteLine("Find vehicle(s) by number of seats");
+                Console.WriteLine("----------------------------------");
+                Console.WriteLine();
+
+                var numberOfSeats = ConsoleHelper.ReadInt("Enter the number of seats (> 0): ", value => value < 1 || value > int.MaxValue);
+
+                var foundVehicles = garage.FindVehiclesByNumberOfSeats(numberOfSeats);
+
+                Console.WriteLine();
+
+                if (foundVehicles.Length > 0)
+                {
+                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length} vehicles with number of seats '{numberOfSeats}'.");
+                    Console.WriteLine();
+
+                    foreach (var foundVehicle in foundVehicles)
+                    {
+                        foundVehicle.Write();
+                        Console.WriteLine();
+                    }
+                }
+                else
+                {
+                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with number of seats '{numberOfSeats}'.");
+                    Console.WriteLine();
+                }
+
+                var answer = ConsoleHelper.ReadYesNo("Do you want to find another ('y', 'n')? ");
+
+                if (answer == false)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine();
+        ConsoleHelper.WriteErrorLine($"An unexpected error has occurred: {ex.Message}");
+        Console.WriteLine();
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+    }
+}
+
 static void FindVehicleByRegistrationNumber(IGarage garage)
 {
     try
@@ -693,11 +777,11 @@ static void FindVehicleByRegistrationNumber(IGarage garage)
 
                 try
                 {
-                    var vehicle = garage.FindVehicleByRegistrationNumber(registrationNumber);
+                    var foundVehicle = garage.FindVehicleByRegistrationNumber(registrationNumber);
 
                     Console.WriteLine();
 
-                    vehicle.Write();
+                    foundVehicle.Write();
                 }
                 catch (VehicleNotFoundException ex)
                 {
@@ -726,7 +810,7 @@ static void FindVehicleByRegistrationNumber(IGarage garage)
     }
 }
 
-static void FindByVehicleType(IGarage garage)
+static void FindVehiclesByVehicleType(IGarage garage)
 {
     try
     {
@@ -766,18 +850,18 @@ static void FindByVehicleType(IGarage garage)
 
                 var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Bicycle', 'Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
 
-                var vehicles = garage.FindVehiclesByVehicleType(vehicleType);
+                var foundVehicles = garage.FindVehiclesByVehicleType(vehicleType);
 
                 Console.WriteLine();
 
-                if (vehicles.Length > 0)
+                if (foundVehicles.Length > 0)
                 {
-                    ConsoleHelper.WriteInfoLine($"Found {vehicles.Length} vehicles with vehicle type '{vehicleType}'.");
+                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length} vehicles with vehicle type '{vehicleType}'.");
                     Console.WriteLine();
 
-                    foreach (var vehicle in vehicles)
+                    foreach (var foundVehicle in foundVehicles)
                     {
-                        vehicle.Write();
+                        foundVehicle.Write();
                         Console.WriteLine();
                     }
                 }
@@ -806,7 +890,7 @@ static void FindByVehicleType(IGarage garage)
     }
 }
 
-static void FindByVehicleTypeAndFuelType(IGarage garage)
+static void FindVehiclesByVehicleTypeAndFuelType(IGarage garage)
 {
     try
     {
@@ -847,18 +931,18 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
                 var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Bicycle', 'Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
                 var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
 
-                var vehicles = garage.FindVehiclesByVehicleTypeAndFuelType(vehicleType, fuelType);
+                var foundVehicles = garage.FindVehiclesByVehicleTypeAndFuelType(vehicleType, fuelType);
 
                 Console.WriteLine();
 
-                if (vehicles.Length > 0)
+                if (foundVehicles.Length > 0)
                 {
-                    ConsoleHelper.WriteInfoLine($"Found {vehicles.Length} vehicles with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
+                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length} vehicles with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
                     Console.WriteLine();
 
-                    foreach (var vehicle in vehicles)
+                    foreach (var foundVehicle in foundVehicles)
                     {
-                        vehicle.Write();
+                        foundVehicle.Write();
                         Console.WriteLine();
                     }
                 }

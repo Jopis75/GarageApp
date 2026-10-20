@@ -61,6 +61,15 @@ namespace GarageClassLibrary
             return index;
         }
 
+        public Vehicle[] FindVehiclesByNumberOfSeats(int numberOfSeats)
+        {
+            var foundVehicles = Array.FindAll(vehicles,
+                v => v != null
+                && v.NumberOfSeats == numberOfSeats);
+
+            return foundVehicles;
+        }
+
         public Vehicle FindVehicleByRegistrationNumber(string registrationNumber)
         {
             var index = FindVehicleIndexByRegistrationNumber(registrationNumber);

@@ -16,6 +16,8 @@ namespace GarageClassLibrary.Interfaces
 
         int CountVehicleType(VehicleType vehicleType);
 
+        Vehicle[] FindVehiclesByNumberOfSeats(int numberOfSeats);
+
         Vehicle[] FindVehiclesByVehicleType(VehicleType vehicleType);
 
         Vehicle[] FindVehiclesByVehicleTypeAndFuelType(VehicleType vehicleType, FuelType fuelType);
