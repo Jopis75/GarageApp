@@ -3,6 +3,7 @@ using GarageClassLibrary;
 using GarageClassLibrary.Enums;
 using GarageClassLibrary.Exceptions;
 using GarageClassLibrary.Interfaces;
+using System.Runtime.InteropServices;
 
 var garage = CreateGarage();
 
@@ -50,7 +51,7 @@ static void HandleRemoveVehicle(IGarage garage)
             {
                 Console.Clear();
 
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
+                WriteGarageAppWelcomeInfo();
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
@@ -69,7 +70,7 @@ static void HandleRemoveVehicle(IGarage garage)
             {
                 Console.Clear();
 
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
+                WriteGarageAppWelcomeInfo();
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
@@ -140,7 +141,7 @@ static void HandleListVehicles(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -158,7 +159,7 @@ static void HandleListVehicles(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -192,7 +193,7 @@ static void HandleListVehicleTypes(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -210,7 +211,7 @@ static void HandleListVehicleTypes(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -266,7 +267,7 @@ static void ReadMainMenuSelection(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -327,7 +328,7 @@ static void ReadAddVehicleMenuSelection(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -397,7 +398,7 @@ static void ReadFindVehiclesMenuSelection(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -447,9 +448,9 @@ static IGarage CreateGarage()
     {
         Console.Clear();
 
-        ConsoleHelper.WriteGarageAppWelcomeInfo();
+        WriteGarageAppWelcomeInfo();
 
-        var numberOfParkingSpaces = ConsoleHelper.ReadInt($"Enter the number of parking spaces (> 0): ");
+        var numberOfParkingSpaces = ConsoleHelper.ReadInt($"Enter the number of parking spaces (> 0): ", value => value < 1 || value > int.MaxValue);
 
         var garage = new Garage(numberOfParkingSpaces);
 
@@ -509,7 +510,7 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
             {
                 Console.Clear();
 
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
+                WriteGarageAppWelcomeInfo();
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
@@ -529,7 +530,7 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
             {
                 Console.Clear();
 
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
+                WriteGarageAppWelcomeInfo();
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
@@ -560,54 +561,54 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
 
                 Vehicle? vehicle = null;
 
-                var length = ConsoleHelper.ReadFloat("Enter the length (> 0.0): ");
-                var numberOfSeats = ConsoleHelper.ReadInt("Enter the number of seats (> 0): ");
+                var length = ConsoleHelper.ReadFloat("Enter the length (> 0.0): ", value => !(value > 0.0f) || value > float.MaxValue);
+                var numberOfSeats = ConsoleHelper.ReadInt("Enter the number of seats (> 0): ", value => value < 1 || value > int.MaxValue);
 
                 if (vehicleType == VehicleType.Bicycle)
                 {
-                    var numberOfGears = ConsoleHelper.ReadInt("Enter the number of gears (> 0): ");
+                    var numberOfGears = ConsoleHelper.ReadInt("Enter the number of gears (> 0): ", value => value < 1 || value > int.MaxValue);
 
                     vehicle = new Bicycle(registrationNumber, length, numberOfSeats, numberOfGears);
                 }
                 else
                 {
-                    var numberOfEngines = ConsoleHelper.ReadInt("Enter the number of engines (> 0): ");
-                    var cylinderVolume = ConsoleHelper.ReadFloat("Enter the cylinder volume (> 0.0): ");
+                    var numberOfEngines = ConsoleHelper.ReadInt("Enter the number of engines (> 0): ", value => value < 1 || value > int.MaxValue);
+                    var cylinderVolume = ConsoleHelper.ReadFloat("Enter the cylinder volume (> 0.0): ", value => !(value > 0.0f) || value > float.MaxValue);
                     var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
 
                     if (vehicleType == VehicleType.Motorcycle)
                     {
-                        var seatHeight = ConsoleHelper.ReadFloat("Enter the seat height (> 0.0): ");
+                        var seatHeight = ConsoleHelper.ReadFloat("Enter the seat height (> 0.0): ", value => !(value > 0.0f) || value > float.MaxValue);
 
                         vehicle = new Motorcycle(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, seatHeight);
                     }
                     else if (vehicleType == VehicleType.Car)
                     {
-                        var maxTrailerWeight = ConsoleHelper.ReadFloat("Enter the maximum trailer weight (> 0.0): ");
+                        var maxTrailerWeight = ConsoleHelper.ReadFloat("Enter the maximum trailer weight (> 0.0): ", value => !(value > 0.0f) || value > float.MaxValue);
 
                         vehicle = new Car(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxTrailerWeight);
                     }
                     else if (vehicleType == VehicleType.Truck)
                     {
-                        var maximumLoad = ConsoleHelper.ReadFloat("Enter the maximum load (> 0.0): ");
+                        var maximumLoad = ConsoleHelper.ReadFloat("Enter the maximum load (> 0.0): ", value => !(value > 0.0f) || value > float.MaxValue);
 
                         vehicle = new Truck(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maximumLoad);
                     }
                     else if (vehicleType == VehicleType.Bus)
                     {
-                        var numberOfPassengerSeats = ConsoleHelper.ReadInt("Enter the number of passenger seats (> 0): ");
+                        var numberOfPassengerSeats = ConsoleHelper.ReadInt("Enter the number of passenger seats (> 0): ", value => value < 1 || value > int.MaxValue);
 
                         vehicle = new Bus(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, numberOfPassengerSeats);
                     }
                     else if (vehicleType == VehicleType.Boat)
                     {
-                        var draft = ConsoleHelper.ReadFloat("Enter the draft (> 0.0): ");
+                        var draft = ConsoleHelper.ReadFloat("Enter the draft (> 0.0): ", value => !(value > 0.0f) || value > float.MaxValue);
 
                         vehicle = new Boat(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, draft);
                     }
                     else if (vehicleType == VehicleType.Airplane)
                     {
-                        var maxThrust = ConsoleHelper.ReadFloat("Enter the Max thrust (> 0.0): ");
+                        var maxThrust = ConsoleHelper.ReadFloat("Enter the Max thrust (> 0.0): ", value => !(value > 0.0f) || value > float.MaxValue);
 
                         vehicle = new Airplane(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxThrust);
                     }
@@ -658,7 +659,7 @@ static void FindVehicleByRegistrationNumber(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -679,7 +680,7 @@ static void FindVehicleByRegistrationNumber(IGarage garage)
             {
                 Console.Clear();
 
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
+                WriteGarageAppWelcomeInfo();
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
@@ -733,7 +734,7 @@ static void FindByVehicleType(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -754,7 +755,7 @@ static void FindByVehicleType(IGarage garage)
             {
                 Console.Clear();
 
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
+                WriteGarageAppWelcomeInfo();
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
@@ -813,7 +814,7 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
         {
             Console.Clear();
 
-            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            WriteGarageAppWelcomeInfo();
             ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
             Console.WriteLine();
@@ -834,7 +835,7 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
             {
                 Console.Clear();
 
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
+                WriteGarageAppWelcomeInfo();
                 ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
 
                 Console.WriteLine();
@@ -845,7 +846,7 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
 
                 var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Bicycle', 'Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
                 var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
-            
+
                 var vehicles = garage.FindVehiclesByVehicleTypeAndFuelType(vehicleType, fuelType);
 
                 Console.WriteLine();
@@ -884,4 +885,13 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
         Console.Write("Press any key to continue...");
         Console.ReadKey();
     }
+}
+
+static void WriteGarageAppWelcomeInfo()
+{
+    Console.WriteLine(" ▄██████ ██████▄  ██████▄  ██████▄   ▄██████  ▄██████      ██████▄  ██████▄  ██████▄ \r\n▒▒▒  ▀▀▀ ▄▄▄  ▒▒▒ ▄▄▄  ▒▒▀ ▄▄▄  ▒▒▒ ▒▒▒  ▀▀▀ ▒▒▒  ▀▀▀      ▄▄▄  ▒▒▒ ▄▄▄  ▒▒▒ ▄▄▄  ▒▒▒\r\n███  ▄▄▄ ████████ ██████▄  ████████ ███ ████ █████▀        ████████ ██████▀  ██████▀ \r\n▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▄▄▄      ▒▒▒  ▒▒▒ ▒▒▒      ▒▒▒     \r\n ▀██████ ███  ███ ███  ███ ███  ███  ▀██████  ▀██████      ███  ███ ███      ███     ");
+    Console.WriteLine();
+    Console.WriteLine("Welcome to the Garage App!");
+    Console.WriteLine();
+    Console.WriteLine();
 }

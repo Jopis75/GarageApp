@@ -19,34 +19,34 @@ namespace GarageApp.Helpers
             return @enum;
         }
 
-        public static float ReadFloat(string prompt)
+        public static float ReadFloat(string prompt, Func<float, bool> func)
         {
-            var floatInput = string.Empty;
-            var @float = 0.0f;
+            var valueInput = string.Empty;
+            var value = 0.0f;
 
             do
             {
                 Console.Write(prompt);
-                floatInput = Console.ReadLine();
+                valueInput = Console.ReadLine();
             }
-            while (float.TryParse(floatInput, out @float) == false || !(@float > 0.0f) || @float > float.MaxValue);
+            while (float.TryParse(valueInput, out value) == false || func(value));
 
-            return @float;
+            return value;
         }
 
-        public static int ReadInt(string prompt)
+        public static int ReadInt(string prompt, Func<float, bool> func)
         {
-            var intInput = string.Empty;
-            var @int = 0;
+            var valueInput = string.Empty;
+            var value = 0;
 
             do
             {
                 Console.Write(prompt);
-                intInput = Console.ReadLine();
+                valueInput = Console.ReadLine();
             }
-            while (int.TryParse(intInput, out @int) == false || @int < 1 || @int > int.MaxValue);
+            while (int.TryParse(valueInput, out value) == false || func(value));
 
-            return @int;
+            return value;
         }
 
         public static string ReadRegistrationNumber(string prompt)
@@ -85,15 +85,6 @@ namespace GarageApp.Helpers
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(message);
             Console.ResetColor();
-            Console.WriteLine();
-        }
-
-        public static void WriteGarageAppWelcomeInfo()
-        {
-            Console.WriteLine(" ▄██████ ██████▄  ██████▄  ██████▄   ▄██████  ▄██████      ██████▄  ██████▄  ██████▄ \r\n▒▒▒  ▀▀▀ ▄▄▄  ▒▒▒ ▄▄▄  ▒▒▀ ▄▄▄  ▒▒▒ ▒▒▒  ▀▀▀ ▒▒▒  ▀▀▀      ▄▄▄  ▒▒▒ ▄▄▄  ▒▒▒ ▄▄▄  ▒▒▒\r\n███  ▄▄▄ ████████ ██████▄  ████████ ███ ████ █████▀        ████████ ██████▀  ██████▀ \r\n▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▄▄▄      ▒▒▒  ▒▒▒ ▒▒▒      ▒▒▒     \r\n ▀██████ ███  ███ ███  ███ ███  ███  ▀██████  ▀██████      ███  ███ ███      ███     ");
-            Console.WriteLine();
-            Console.WriteLine("Welcome to the Garage App!");
-            Console.WriteLine();
             Console.WriteLine();
         }
 
