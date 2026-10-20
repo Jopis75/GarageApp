@@ -47,6 +47,20 @@ namespace GarageClassLibrary
             return count;
         }
 
+        private int FindVehicleIndexByRegistrationNumber(string registrationNumber)
+        {
+            var index = Array.FindIndex(vehicles, 0,
+                v => v != null
+                && v.RegistrationNumber.Equals(registrationNumber, StringComparison.CurrentCultureIgnoreCase));
+
+            if (index == -1)
+            {
+                throw new VehicleNotFoundException(registrationNumber);
+            }
+
+            return index;
+        }
+
         public Vehicle FindVehicleByRegistrationNumber(string registrationNumber)
         {
             var index = FindVehicleIndexByRegistrationNumber(registrationNumber);
@@ -56,21 +70,22 @@ namespace GarageClassLibrary
 
         public Vehicle[] FindVehiclesByMotorVehicleType(MotorVehicleType motorVehicleType)
         {
-            var foundVehicles = Array.FindAll(vehicles, v => v != null && v.GetType().Name.Equals(motorVehicleType.ToString()));
+            var foundVehicles = Array.FindAll(vehicles,
+                v => v != null
+                && v.GetType().Name.Equals(motorVehicleType.ToString()));
 
             return foundVehicles;
         }
 
-        private int FindVehicleIndexByRegistrationNumber(string registrationNumber)
+        public Vehicle[] FindVehiclesByMotorVehicleTypeAndFuelType(MotorVehicleType motorVehicleType, FuelType fuelType)
         {
-            var index = Array.FindIndex(vehicles, 0, v => v != null && v.RegistrationNumber.Equals(registrationNumber, StringComparison.CurrentCultureIgnoreCase));
+            var foundVehicles = Array.FindAll(vehicles, 
+                v => v != null
+                && v is MotorVehicle
+                && v.GetType().Name.Equals(motorVehicleType.ToString())
+                && (v as MotorVehicle)!.FuelType == fuelType);
 
-            if (index == -1)
-            {
-                throw new VehicleNotFoundException(registrationNumber);
-            }
-
-            return index;
+            return foundVehicles;
         }
 
         public string GetStatusInfoString()
@@ -93,7 +108,7 @@ namespace GarageClassLibrary
             return infoLine;
         }
 
-        private Vehicle RemoveVehicle(int index)
+        private Vehicle RemoveVehicleByIndex(int index)
         {
             var vehicle = vehicles[index];
 
@@ -115,7 +130,7 @@ namespace GarageClassLibrary
             return vehicle;
         }
 
-        public Vehicle RemoveVehicle(string registrationNumber)
+        public Vehicle RemoveVehicleByRegistrationNumber(string registrationNumber)
         {
             if (IsEmpty)
             {
@@ -124,7 +139,7 @@ namespace GarageClassLibrary
 
             var index = FindVehicleIndexByRegistrationNumber(registrationNumber);
 
-            var vehicle = RemoveVehicle(index);
+            var vehicle = RemoveVehicleByIndex(index);
 
             return vehicle;
         }

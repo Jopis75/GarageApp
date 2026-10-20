@@ -18,11 +18,13 @@ namespace GarageClassLibrary.Interfaces
 
         Vehicle[] FindVehiclesByMotorVehicleType(MotorVehicleType motorVehicleType);
 
+        Vehicle[] FindVehiclesByMotorVehicleTypeAndFuelType(MotorVehicleType motorVehicleType, FuelType fuelType);
+
         Vehicle FindVehicleByRegistrationNumber(string registrationNumber);
 
         string GetStatusInfoString();
 
-        Vehicle RemoveVehicle(string registrationNumber);
+        Vehicle RemoveVehicleByRegistrationNumber(string registrationNumber);
 
         void WriteVehicles();
 
