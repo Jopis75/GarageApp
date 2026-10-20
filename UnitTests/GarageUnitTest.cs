@@ -1,0 +1,99 @@
+﻿using GarageClassLibrary;
+using GarageClassLibrary.Enums;
+using GarageClassLibrary.Interfaces;
+
+namespace UnitTests
+{
+    public class GarageUnitTest
+    {
+        [Fact]
+        public void TestAddVehicle()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+
+            // Act
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+
+            // Assert
+            Assert.Equal(2, garage.NumberOfVehicles);
+        }
+
+        [Fact]
+        public void TestCountVehicleType()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f));
+
+            // Act
+            var count = garage.CountVehicleType(VehicleType.Car);
+
+            // Assert
+            Assert.Equal(2, count);
+        }
+
+        [Fact]
+        public void TestFindVehicleByRegistrationNumber()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+
+            // Act
+            var vehicle = garage.FindVehicleByRegistrationNumber("ABC 12A");
+
+            // Assert
+            Assert.Equal("ABC 12A", vehicle.RegistrationNumber);
+        }
+
+        [Fact]
+        public void TestIsEmpty()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+
+            // Act
+            garage.RemoveVehicleByRegistrationNumber("ABC 12A");
+
+            // Assert
+            Assert.True(garage.IsEmpty);
+        }
+
+        [Fact]
+        public void TestIsFull()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+
+            // Act
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f));
+
+            // Assert
+            Assert.True(garage.IsFull);
+        }
+
+        [Fact]
+        public void TestRemoveVehicleByRegistrationNumber()
+        {
+            // Arrange
+            IGarage garage = new Garage(3);
+            garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
+            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+
+            // Act
+            var vehicle = garage.RemoveVehicleByRegistrationNumber("ABC 12A");
+
+            // Assert
+            Assert.Equal(1, garage.NumberOfVehicles);
+            Assert.Equal("ABC 12A", vehicle.RegistrationNumber);
+        }
+    }
+}
