@@ -97,14 +97,6 @@ namespace GarageApp.Helpers
             Console.WriteLine();
         }
 
-        public static void WriteGarageAppThankYouForUsingInfo()
-        {
-            Console.WriteLine("█████████ ███  ███ ██████▄  ██████▄  ███  ███      ███  ███ ██████▄  ███  ███ ███\r\n▀▀ ▒▒▒ ▀▀ ▒▒▒  ▒▒▒ ▄▄▄  ▒▒▒ ▄▄▄  ▒▒▒ ▒▒▒ ▄▒▒▀      ▒▒▒▄ ▒▒▒ ▄▄▄  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒\r\n   ███    ████████ ████████ ███  ███ ██████▄        ▀██████ ███  ███ ███  ███ ███\r\n   ▒▒▒    ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒ ▀▒▒▒          ▄▒▒▒ ▒▒▒  ▒▒▒ ▒▒▒  ▒▒▒ ▀▀▀\r\n   ███    ███  ███ ███  ███ ███  ███ ███  ███      ██████▀   ▀████▀   ▀████▀  ███");
-            Console.WriteLine("Thank you for using the Garage App!");
-            Console.WriteLine();
-            Console.WriteLine();
-        }
-
         public static void WriteInfoLine(string message)
         {
             Console.BackgroundColor = ConsoleColor.Blue;

@@ -8,66 +8,6 @@ var garage = CreateGarage();
 
 HandleMainMenu(garage);
 
-
-
-static IGarage CreateGarage()
-{
-    try
-    {
-        Console.Clear();
-
-        ConsoleHelper.WriteGarageAppWelcomeInfo();
-
-        var numberOfParkingSpaces = ConsoleHelper.ReadInt($"Enter the number of parking spaces (> 0): ");
-
-        var garage = new Garage(numberOfParkingSpaces);
-
-        Console.WriteLine();
-
-        var answer = ConsoleHelper.ReadYesNo("Do you want to add some vehicles to the garage ('y', 'n')? ");
-
-        if (answer == true)
-        {
-            Vehicle[] vehicles =
-            [
-                new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f),
-                new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f),
-                new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f)
-                //,new Bicycle("", 1.5f, 1)
-            ];
-
-            var length = Math.Min(garage.NumberOfParkingSpaces, vehicles.Length);
-
-            for (var i = 0; i < length; i++)
-            {
-                try
-                {
-                    garage.AddVehicle(vehicles[i]);
-                }
-                catch (IndexOutOfRangeException ex)
-                {
-                    Console.WriteLine();
-                    ConsoleHelper.WriteErrorLine($"An error occurred while adding the vehicle: {ex.Message}");
-                    Console.WriteLine();
-                    Console.Write("Press any key to continue...");
-                    Console.ReadKey();
-                }
-            }
-        }
-
-        return garage;
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine();
-        ConsoleHelper.WriteErrorLine($"An unexpected error has occurred: {ex.Message}");
-        Console.WriteLine();
-        Console.Write("Press any key to continue...");
-        Console.ReadKey();
-        throw;
-    }
-}
-
 static void HandleMainMenu(IGarage garage)
 {
     try
@@ -519,6 +459,64 @@ static void ReadFindVehiclesMenuSelection(IGarage garage)
     }
 }
 
+static IGarage CreateGarage()
+{
+    try
+    {
+        Console.Clear();
+
+        ConsoleHelper.WriteGarageAppWelcomeInfo();
+
+        var numberOfParkingSpaces = ConsoleHelper.ReadInt($"Enter the number of parking spaces (> 0): ");
+
+        var garage = new Garage(numberOfParkingSpaces);
+
+        Console.WriteLine();
+
+        var answer = ConsoleHelper.ReadYesNo("Do you want to add some vehicles to the garage ('y', 'n')? ");
+
+        if (answer == true)
+        {
+            Vehicle[] vehicles =
+            [
+                new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f),
+                new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f),
+                new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f)
+                //,new Bicycle("", 1.5f, 1)
+            ];
+
+            var length = Math.Min(garage.NumberOfParkingSpaces, vehicles.Length);
+
+            for (var i = 0; i < length; i++)
+            {
+                try
+                {
+                    garage.AddVehicle(vehicles[i]);
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    Console.WriteLine();
+                    ConsoleHelper.WriteErrorLine($"An error occurred while adding the vehicle: {ex.Message}");
+                    Console.WriteLine();
+                    Console.Write("Press any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+        return garage;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine();
+        ConsoleHelper.WriteErrorLine($"An unexpected error has occurred: {ex.Message}");
+        Console.WriteLine();
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+        throw;
+    }
+}
+
 static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
 {
     try
@@ -625,7 +623,7 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
 
                 try
                 {
-                    garage.AddVehicle(vehicle);
+                    garage.AddVehicle(vehicle!);
 
                     Console.WriteLine();
                     ConsoleHelper.WriteSuccessLine("The vehicle was added successfully.");
