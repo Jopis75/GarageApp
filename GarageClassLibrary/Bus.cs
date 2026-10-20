@@ -12,6 +12,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (int.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("NumberOfPassengerSeats must be a positive value.");
+                }
+
                 numberOfPassengerSeats = value;
             }
         }

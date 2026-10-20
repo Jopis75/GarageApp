@@ -12,6 +12,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (float.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("MaxTrailerWeight must be a positive value.");
+                }
+
                 maxTrailerWeight = value;
             }
         }

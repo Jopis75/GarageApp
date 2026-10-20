@@ -10,6 +10,11 @@
             }
             set
             {
+                if (int.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("NumberOfGears must be a positive value.");
+                }
+
                 numberOfGears = value;
             }
         }

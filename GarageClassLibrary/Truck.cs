@@ -2,17 +2,22 @@
 
 namespace GarageClassLibrary
 {
-    public class Truck(string registrationNumber, float length, int numberOfSeats, int numberOfEngines, float cylinderVolume, FuelType fuelType, float maximumLoad) : MotorVehicle(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType)
+    public class Truck(string registrationNumber, float length, int numberOfSeats, int numberOfEngines, float cylinderVolume, FuelType fuelType, float maxLoad) : MotorVehicle(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType)
     {
-        public float MaximumLoad
+        public float MaxLoad
         {
             get
             {
-                return maximumLoad;
+                return maxLoad;
             }
             set
             {
-                maximumLoad = value;
+                if (float.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("MaxLoad must be a positive value.");
+                }
+
+                maxLoad = value;
             }
         }
 
@@ -22,7 +27,7 @@ namespace GarageClassLibrary
 
             base.Write();
 
-            Console.WriteLine($"Maximum load: {MaximumLoad}");
+            Console.WriteLine($"Max load: {MaxLoad}");
         }
     }
 }

@@ -12,6 +12,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (float.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("CylinderVolume must be a positive value.");
+                }
+
                 cylinderVolume = value;
             }
         }
@@ -36,6 +41,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (int.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("NumberOfEngines must be a positive value.");
+                }
+
                 numberOfEngines = value;
             }
         }

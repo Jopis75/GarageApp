@@ -12,6 +12,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (float.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("SeatHeight must be a positive value.");
+                }
+
                 seatHeight = value;
             }
         }

@@ -12,6 +12,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (float.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("MaxThrust must be a positive value.");
+                }
+
                 maxThrust = value;
             }
         }

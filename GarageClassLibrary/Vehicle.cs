@@ -12,6 +12,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (float.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("Length must be a positive value.");
+                }
+
                 length = value;
             }
         }
@@ -24,6 +29,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (int.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("NumberOfSeats must be a positive value.");
+                }
+
                 numberOfSeats = value;
             }
         }

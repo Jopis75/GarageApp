@@ -12,6 +12,11 @@ namespace GarageClassLibrary
             }
             set
             {
+                if (float.IsPositive(value) == false)
+                {
+                    throw new ArgumentException("Draft must be a positive value.");
+                }
+
                 draft = value;
             }
         }
