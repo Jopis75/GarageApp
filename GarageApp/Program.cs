@@ -510,6 +510,9 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
     {
         while (true)
         {
+            var infoString = $"Add {vehicleType} vehicle to garage";
+            var infoStringUnderline = new string('-', infoString.Length);
+
             if (garage.IsFull)
             {
                 Console.Clear();
@@ -519,8 +522,8 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
 
                 Console.WriteLine();
 
-                Console.WriteLine("Add vehicle to garage");
-                Console.WriteLine("---------------------");
+                Console.WriteLine(infoString);
+                Console.WriteLine(infoStringUnderline);
                 Console.WriteLine();
 
                 ConsoleHelper.WriteInfoLine("The garage is full.");
@@ -539,8 +542,8 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
 
                 Console.WriteLine();
 
-                Console.WriteLine("Add vehicle to garage");
-                Console.WriteLine("---------------------");
+                Console.WriteLine(infoString);
+                Console.WriteLine(infoStringUnderline);
                 Console.WriteLine();
 
                 var registrationNumber = string.Empty;
