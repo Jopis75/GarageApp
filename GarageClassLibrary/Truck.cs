@@ -12,7 +12,7 @@ namespace GarageClassLibrary
             }
             set
             {
-                if (float.IsPositive(value) == false)
+                if (value <= 0.0f)
                 {
                     throw new ArgumentException("MaxLoad must be a positive value.");
                 }
