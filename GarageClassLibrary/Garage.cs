@@ -68,21 +68,21 @@ namespace GarageClassLibrary
             return vehicles[index];
         }
 
-        public Vehicle[] FindVehiclesByMotorVehicleType(MotorVehicleType motorVehicleType)
+        public Vehicle[] FindVehiclesByVehicleType(VehicleType vehicleType)
         {
             var foundVehicles = Array.FindAll(vehicles,
                 v => v != null
-                && v.GetType().Name.Equals(motorVehicleType.ToString()));
+                && v.GetType().Name.Equals(vehicleType.ToString()));
 
             return foundVehicles;
         }
 
-        public Vehicle[] FindVehiclesByMotorVehicleTypeAndFuelType(MotorVehicleType motorVehicleType, FuelType fuelType)
+        public Vehicle[] FindVehiclesByVehicleTypeAndFuelType(VehicleType vehicleType, FuelType fuelType)
         {
             var foundVehicles = Array.FindAll(vehicles, 
                 v => v != null
                 && v is MotorVehicle
-                && v.GetType().Name.Equals(motorVehicleType.ToString())
+                && v.GetType().Name.Equals(vehicleType.ToString())
                 && (v as MotorVehicle)!.FuelType == fuelType);
 
             return foundVehicles;

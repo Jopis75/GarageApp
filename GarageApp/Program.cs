@@ -59,7 +59,7 @@ static void HandleRemoveVehicle(IGarage garage)
                 Console.WriteLine("--------------------------");
                 Console.WriteLine();
 
-                ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+                ConsoleHelper.WriteInfoLine("The garage is empty.");
                 Console.WriteLine();
                 Console.Write("Press any key to continue...");
                 Console.ReadKey();
@@ -149,7 +149,7 @@ static void HandleListVehicles(IGarage garage)
             Console.WriteLine("-----------------------");
             Console.WriteLine();
 
-            ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+            ConsoleHelper.WriteInfoLine("The garage is empty.");
             Console.WriteLine();
             Console.Write("Press any key to continue...");
             Console.ReadKey();
@@ -201,7 +201,7 @@ static void HandleListVehicleTypes(IGarage garage)
             Console.WriteLine("----------------------------");
             Console.WriteLine();
 
-            ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+            ConsoleHelper.WriteInfoLine("The garage is empty.");
             Console.WriteLine();
             Console.Write("Press any key to continue...");
             Console.ReadKey();
@@ -217,6 +217,9 @@ static void HandleListVehicleTypes(IGarage garage)
 
             Console.WriteLine("List vehicle types in garage");
             Console.WriteLine("----------------------------");
+            Console.WriteLine();
+
+            garage.WriteVehicleTypeCount(VehicleType.Bicycle);
             Console.WriteLine();
 
             garage.WriteVehicleTypeCount(VehicleType.Motorcycle);
@@ -322,76 +325,55 @@ static void ReadAddVehicleMenuSelection(IGarage garage)
 
         while (exit == false)
         {
-            if (garage.IsFull)
+            Console.Clear();
+
+            ConsoleHelper.WriteGarageAppWelcomeInfo();
+            ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
+
+            Console.WriteLine();
+
+            Console.WriteLine("What type of vehicle do you want to add?");
+            Console.WriteLine();
+
+            Console.WriteLine("1. A bicycle.");
+            Console.WriteLine("2. A motorcycle.");
+            Console.WriteLine("3. A car.");
+            Console.WriteLine("4. A truck.");
+            Console.WriteLine("5. A bus.");
+            Console.WriteLine("6. A boat.");
+            Console.WriteLine("7. An airplane.");
+            Console.WriteLine("8. Exit to Main menu.");
+            Console.WriteLine();
+            Console.Write("Enter your selection: ");
+
+            var selection = Console.ReadLine();
+
+            switch (selection)
             {
-                Console.Clear();
-
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
-                ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
-
-                Console.WriteLine();
-
-                Console.WriteLine("What type of vehicle do you want to add?");
-                Console.WriteLine();
-
-                ConsoleHelper.WriteInfoLine("The garage is full.");
-                Console.WriteLine();
-                Console.Write("Press any key to continue...");
-                Console.ReadKey();
-                break;
-            }
-            else
-            {
-                Console.Clear();
-
-                ConsoleHelper.WriteGarageAppWelcomeInfo();
-                ConsoleHelper.WriteInfoLine(garage.GetStatusInfoString());
-
-                Console.WriteLine();
-
-                Console.WriteLine("What type of vehicle do you want to add?");
-                Console.WriteLine();
-
-                Console.WriteLine("1. A bicycle.");
-                Console.WriteLine("2. A motorcycle.");
-                Console.WriteLine("3. A car.");
-                Console.WriteLine("4. A truck.");
-                Console.WriteLine("5. A bus.");
-                Console.WriteLine("6. A boat.");
-                Console.WriteLine("7. An airplane.");
-                Console.WriteLine("8. Exit to Main menu.");
-                Console.WriteLine();
-                Console.Write("Enter your selection: ");
-
-                var selection = Console.ReadLine();
-
-                switch (selection)
-                {
-                    case "1":
-                        // AddBicycle(garage, ???);
-                        break;
-                    case "2":
-                        AddMotorVehicle(garage, MotorVehicleType.Motorcycle);
-                        break;
-                    case "3":
-                        AddMotorVehicle(garage, MotorVehicleType.Car);
-                        break;
-                    case "4":
-                        AddMotorVehicle(garage, MotorVehicleType.Truck);
-                        break;
-                    case "5":
-                        AddMotorVehicle(garage, MotorVehicleType.Bus);
-                        break;
-                    case "6":
-                        AddMotorVehicle(garage, MotorVehicleType.Boat);
-                        break;
-                    case "7":
-                        AddMotorVehicle(garage, MotorVehicleType.Airplane);
-                        break;
-                    case "8":
-                        exit = true;
-                        break;
-                }
+                case "1":
+                    AddVehicle(garage, VehicleType.Bicycle);
+                    break;
+                case "2":
+                    AddVehicle(garage, VehicleType.Motorcycle);
+                    break;
+                case "3":
+                    AddVehicle(garage, VehicleType.Car);
+                    break;
+                case "4":
+                    AddVehicle(garage, VehicleType.Truck);
+                    break;
+                case "5":
+                    AddVehicle(garage, VehicleType.Bus);
+                    break;
+                case "6":
+                    AddVehicle(garage, VehicleType.Boat);
+                    break;
+                case "7":
+                    AddVehicle(garage, VehicleType.Airplane);
+                    break;
+                case "8":
+                    exit = true;
+                    break;
             }
         }
     }
@@ -479,10 +461,10 @@ static IGarage CreateGarage()
         {
             Vehicle[] vehicles =
             [
+                new Bicycle("XYZ 123", 1.5f, 1, 3),
                 new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f),
-                new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f),
-                new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f)
-                //,new Bicycle("", 1.5f, 1)
+                new Car("DEF 34B", 4.25f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f),
+                new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Diesel, 40000.0f)
             ];
 
             var length = Math.Min(garage.NumberOfParkingSpaces, vehicles.Length);
@@ -517,7 +499,7 @@ static IGarage CreateGarage()
     }
 }
 
-static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
+static void AddVehicle(IGarage garage, VehicleType vehicleType)
 {
     try
     {
@@ -578,47 +560,57 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
 
                 Vehicle? vehicle = null;
 
-                var length = ConsoleHelper.ReadFloat("Enter the length in meters (> 0.0): ");
+                var length = ConsoleHelper.ReadFloat("Enter the length (> 0.0): ");
                 var numberOfSeats = ConsoleHelper.ReadInt("Enter the number of seats (> 0): ");
-                var numberOfEngines = ConsoleHelper.ReadInt("Enter the number of engines (> 0): ");
-                var cylinderVolume = ConsoleHelper.ReadFloat("Enter the cylinder volume (> 0.0): ");
-                var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
 
-                if (motorVehicleType == MotorVehicleType.Motorcycle)
+                if (vehicleType == VehicleType.Bicycle)
                 {
-                    var seatHeight = ConsoleHelper.ReadFloat("Enter the seat height (> 0.0): ");
+                    var numberOfGears = ConsoleHelper.ReadInt("Enter the number of gears (> 0): ");
 
-                    vehicle = new Motorcycle(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, seatHeight);
+                    vehicle = new Bicycle(registrationNumber, length, numberOfSeats, numberOfGears);
                 }
-                else if (motorVehicleType == MotorVehicleType.Car)
+                else
                 {
-                    var maxTrailerWeight = ConsoleHelper.ReadFloat("Enter the maximum trailer weight (> 0.0): ");
+                    var numberOfEngines = ConsoleHelper.ReadInt("Enter the number of engines (> 0): ");
+                    var cylinderVolume = ConsoleHelper.ReadFloat("Enter the cylinder volume (> 0.0): ");
+                    var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
 
-                    vehicle = new Car(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxTrailerWeight);
-                }
-                else if (motorVehicleType == MotorVehicleType.Truck)
-                {
-                    var maximumLoad = ConsoleHelper.ReadFloat("Enter the maximum load (> 0.0): ");
+                    if (vehicleType == VehicleType.Motorcycle)
+                    {
+                        var seatHeight = ConsoleHelper.ReadFloat("Enter the seat height (> 0.0): ");
 
-                    vehicle = new Truck(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maximumLoad);
-                }
-                else if (motorVehicleType == MotorVehicleType.Bus)
-                {
-                    var numberOfPassengerSeats = ConsoleHelper.ReadInt("Enter the number of passenger seats (> 0): ");
+                        vehicle = new Motorcycle(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, seatHeight);
+                    }
+                    else if (vehicleType == VehicleType.Car)
+                    {
+                        var maxTrailerWeight = ConsoleHelper.ReadFloat("Enter the maximum trailer weight (> 0.0): ");
 
-                    vehicle = new Bus(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, numberOfPassengerSeats);
-                }
-                else if (motorVehicleType == MotorVehicleType.Boat)
-                {
-                    var draft = ConsoleHelper.ReadFloat("Enter the draft (> 0.0): ");
+                        vehicle = new Car(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxTrailerWeight);
+                    }
+                    else if (vehicleType == VehicleType.Truck)
+                    {
+                        var maximumLoad = ConsoleHelper.ReadFloat("Enter the maximum load (> 0.0): ");
 
-                    vehicle = new Boat(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, draft);
-                }
-                else if (motorVehicleType == MotorVehicleType.Airplane)
-                {
-                    var maxThrust = ConsoleHelper.ReadFloat("Enter the Max thrust (> 0.0): ");
+                        vehicle = new Truck(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maximumLoad);
+                    }
+                    else if (vehicleType == VehicleType.Bus)
+                    {
+                        var numberOfPassengerSeats = ConsoleHelper.ReadInt("Enter the number of passenger seats (> 0): ");
 
-                    vehicle = new Airplane(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxThrust);
+                        vehicle = new Bus(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, numberOfPassengerSeats);
+                    }
+                    else if (vehicleType == VehicleType.Boat)
+                    {
+                        var draft = ConsoleHelper.ReadFloat("Enter the draft (> 0.0): ");
+
+                        vehicle = new Boat(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, draft);
+                    }
+                    else if (vehicleType == VehicleType.Airplane)
+                    {
+                        var maxThrust = ConsoleHelper.ReadFloat("Enter the Max thrust (> 0.0): ");
+
+                        vehicle = new Airplane(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxThrust);
+                    }
                 }
 
                 try
@@ -675,7 +667,7 @@ static void FindVehicleByRegistrationNumber(IGarage garage)
             Console.WriteLine("-----------------------------------");
             Console.WriteLine();
 
-            ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+            ConsoleHelper.WriteInfoLine("The garage is empty.");
             Console.WriteLine();
             Console.WriteLine();
             Console.Write("Press any key to continue...");
@@ -750,7 +742,7 @@ static void FindByVehicleType(IGarage garage)
             Console.WriteLine("-------------------------------");
             Console.WriteLine();
 
-            ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+            ConsoleHelper.WriteInfoLine("The garage is empty.");
             Console.WriteLine();
             Console.WriteLine();
             Console.Write("Press any key to continue...");
@@ -771,15 +763,15 @@ static void FindByVehicleType(IGarage garage)
                 Console.WriteLine("-------------------------------");
                 Console.WriteLine();
 
-                var motorVehicleType = ConsoleHelper.ReadEnum<MotorVehicleType>("Enter the vehicle type ('Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
+                var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
 
-                var vehicles = garage.FindVehiclesByMotorVehicleType(motorVehicleType);
+                var vehicles = garage.FindVehiclesByVehicleType(vehicleType);
 
                 Console.WriteLine();
 
                 if (vehicles.Length > 0)
                 {
-                    ConsoleHelper.WriteInfoLine($"Found {vehicles.Length} vehicles with vehicle type '{motorVehicleType}'.");
+                    ConsoleHelper.WriteInfoLine($"Found {vehicles.Length} vehicles with vehicle type '{vehicleType}'.");
                     Console.WriteLine();
 
                     foreach (var vehicle in vehicles)
@@ -790,7 +782,7 @@ static void FindByVehicleType(IGarage garage)
                 }
                 else
                 {
-                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with vehicle type '{motorVehicleType}'.");
+                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with vehicle type '{vehicleType}'.");
                     Console.WriteLine();
                 }
 
@@ -830,7 +822,7 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine();
 
-            ConsoleHelper.WriteInfoLine("The garage is empty. Please add some vehicles.");
+            ConsoleHelper.WriteInfoLine("The garage is empty.");
             Console.WriteLine();
             Console.WriteLine();
             Console.Write("Press any key to continue...");
@@ -851,16 +843,16 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
                 Console.WriteLine("---------------------------------------------");
                 Console.WriteLine();
 
-                var motorVehicleType = ConsoleHelper.ReadEnum<MotorVehicleType>("Enter the vehicle type ('Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
+                var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
                 var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
             
-                var vehicles = garage.FindVehiclesByMotorVehicleTypeAndFuelType(motorVehicleType, fuelType);
+                var vehicles = garage.FindVehiclesByVehicleTypeAndFuelType(vehicleType, fuelType);
 
                 Console.WriteLine();
 
                 if (vehicles.Length > 0)
                 {
-                    ConsoleHelper.WriteInfoLine($"Found {vehicles.Length} vehicles with vehicle type '{motorVehicleType}' and fuel type '{fuelType}'.");
+                    ConsoleHelper.WriteInfoLine($"Found {vehicles.Length} vehicles with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
                     Console.WriteLine();
 
                     foreach (var vehicle in vehicles)
@@ -871,7 +863,7 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
                 }
                 else
                 {
-                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with vehicle type '{motorVehicleType}' and fuel type '{fuelType}'.");
+                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
                     Console.WriteLine();
                 }
 
