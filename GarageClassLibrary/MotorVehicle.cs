@@ -54,9 +54,9 @@ namespace GarageClassLibrary
         {
             base.Write();
 
-            Console.WriteLine($"Number of engines: {NumberOfEngines}");
-            Console.WriteLine($"Cylinder volumne: {CylinderVolume}");
-            Console.WriteLine($"Fuel type: {FuelType}");
+            Console.WriteLine($"Number of engines: {numberOfEngines}");
+            Console.WriteLine($"Cylinder volumne: {cylinderVolume}");
+            Console.WriteLine($"Fuel type: {fuelType}");
         }
     }
 }

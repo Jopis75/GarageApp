@@ -27,7 +27,7 @@ namespace GarageClassLibrary
 
             base.Write();
 
-            Console.WriteLine($"Seat height: {SeatHeight}");
+            Console.WriteLine($"Seat height: {seatHeight}");
         }
     }
 }

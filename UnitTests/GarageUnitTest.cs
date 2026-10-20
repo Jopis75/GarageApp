@@ -14,7 +14,7 @@ namespace UnitTests
 
             // Act
             garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
-            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
 
             // Assert
             Assert.Equal(2, garage.NumberOfVehicles);
@@ -26,7 +26,7 @@ namespace UnitTests
             // Arrange
             IGarage garage = new Garage(3);
             garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
-            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
             garage.AddVehicle(new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f));
 
             // Act
@@ -42,7 +42,7 @@ namespace UnitTests
             // Arrange
             IGarage garage = new Garage(3);
             garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
-            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
 
             // Act
             var vehicle = garage.FindVehicleByRegistrationNumber("ABC 12A");
@@ -73,7 +73,7 @@ namespace UnitTests
 
             // Act
             garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
-            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
             garage.AddVehicle(new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f));
 
             // Assert
@@ -86,7 +86,7 @@ namespace UnitTests
             // Arrange
             IGarage garage = new Garage(3);
             garage.AddVehicle(new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f));
-            garage.AddVehicle(new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
+            garage.AddVehicle(new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f));
 
             // Act
             var vehicle = garage.RemoveVehicleByRegistrationNumber("ABC 12A");

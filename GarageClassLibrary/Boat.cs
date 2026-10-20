@@ -27,7 +27,7 @@ namespace GarageClassLibrary
 
             base.Write();
 
-            Console.WriteLine($"Draft: {Draft}");
+            Console.WriteLine($"Draft: {draft}");
         }
     }
 }

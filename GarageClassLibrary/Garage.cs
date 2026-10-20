@@ -12,7 +12,7 @@ namespace GarageClassLibrary
 
         public bool IsEmpty => NumberOfVehicles == 0;
 
-        public bool IsFull => NumberOfVehicles >= numberOfParkingSpaces;
+        public bool IsFull => NumberOfVehicles == numberOfParkingSpaces;
 
         public int NumberOfParkingSpaces => numberOfParkingSpaces;
 

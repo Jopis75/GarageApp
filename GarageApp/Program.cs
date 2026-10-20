@@ -464,7 +464,7 @@ static IGarage CreateGarage()
                 new Bicycle("XYZ 123", 1.5f, 1, 3),
                 new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f),
                 new Car("DEF 34B", 4.25f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f),
-                new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Diesel, 40000.0f)
+                new Truck("RTH 09T", 9.0f, 2, 1, 6.0f, FuelType.Diesel, 40000.0f)
             ];
 
             var length = Math.Min(garage.NumberOfParkingSpaces, vehicles.Length);
@@ -763,7 +763,7 @@ static void FindByVehicleType(IGarage garage)
                 Console.WriteLine("-------------------------------");
                 Console.WriteLine();
 
-                var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
+                var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Bicycle', 'Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
 
                 var vehicles = garage.FindVehiclesByVehicleType(vehicleType);
 
@@ -843,7 +843,7 @@ static void FindByVehicleTypeAndFuelType(IGarage garage)
                 Console.WriteLine("---------------------------------------------");
                 Console.WriteLine();
 
-                var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
+                var vehicleType = ConsoleHelper.ReadEnum<VehicleType>("Enter the vehicle type ('Bicycle', 'Motorcycle', 'Car', 'Truck', 'Bus', 'Boat', 'Airplane'): ");
                 var fuelType = ConsoleHelper.ReadEnum<FuelType>("Enter the fuel type ('Gasoline', 'Diesel'): ");
             
                 var vehicles = garage.FindVehiclesByVehicleTypeAndFuelType(vehicleType, fuelType);

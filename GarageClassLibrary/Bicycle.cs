@@ -25,7 +25,7 @@
 
             base.Write();
 
-            Console.WriteLine($"Number of gears: {NumberOfGears}");
+            Console.WriteLine($"Number of gears: {numberOfGears}");
         }
     }
 }

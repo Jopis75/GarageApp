@@ -27,7 +27,7 @@ namespace GarageClassLibrary
 
             base.Write();
 
-            Console.WriteLine($"Max trailer weight: {MaxTrailerWeight}");
+            Console.WriteLine($"Max trailer weight: {maxTrailerWeight}");
         }
     }
 }

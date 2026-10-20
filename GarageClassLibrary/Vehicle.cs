@@ -48,9 +48,9 @@ namespace GarageClassLibrary
 
         public virtual void Write()
         {
-            Console.WriteLine($"Registration number: {RegistrationNumber}");
-            Console.WriteLine($"Length: {Length}");
-            Console.WriteLine($"Number of seats: {NumberOfSeats}");
+            Console.WriteLine($"Registration number: {registrationNumber}");
+            Console.WriteLine($"Length: {length}");
+            Console.WriteLine($"Number of seats: {numberOfSeats}");
         }
     }
 }

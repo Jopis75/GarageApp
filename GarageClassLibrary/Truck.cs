@@ -27,7 +27,7 @@ namespace GarageClassLibrary
 
             base.Write();
 
-            Console.WriteLine($"Max load: {MaxLoad}");
+            Console.WriteLine($"Max load: {maxLoad}");
         }
     }
 }

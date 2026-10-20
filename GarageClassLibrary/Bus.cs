@@ -27,7 +27,7 @@ namespace GarageClassLibrary
 
             base.Write();
 
-            Console.WriteLine($"Number of passenger seats: {NumberOfPassengerSeats}");
+            Console.WriteLine($"Number of passenger seats: {numberOfPassengerSeats}");
         }
     }
 }

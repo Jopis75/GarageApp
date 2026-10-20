@@ -27,7 +27,7 @@ namespace GarageClassLibrary
 
             base.Write();
 
-            Console.WriteLine($"Max thrust: {MaxThrust}");
+            Console.WriteLine($"Max thrust: {maxThrust}");
         }
     }
 }
