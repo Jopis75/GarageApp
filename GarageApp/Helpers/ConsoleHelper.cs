@@ -6,17 +6,17 @@ namespace GarageApp.Helpers
     {
         public static TEnum ReadEnum<TEnum>(string prompt) where TEnum : struct
         {
-            var enumInput = string.Empty;
-            TEnum @enum;
+            var valueInput = string.Empty;
+            TEnum value;
 
             do
             {
                 Console.Write(prompt);
-                enumInput = Console.ReadLine();
+                valueInput = Console.ReadLine();
             }
-            while (Enum.TryParse<TEnum>(enumInput, out @enum) == false);
+            while (Enum.TryParse<TEnum>(valueInput, out value) == false);
 
-            return @enum;
+            return value;
         }
 
         public static float ReadFloat(string prompt, Func<float, bool> func)
