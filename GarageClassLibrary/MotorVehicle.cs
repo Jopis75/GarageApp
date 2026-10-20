@@ -4,10 +4,49 @@ namespace GarageClassLibrary
 {
     public abstract class MotorVehicle(string registrationNumber, float length, int numberOfSeats, int numberOfEngines, float cylinderVolume, FuelType fuelType) : Vehicle(registrationNumber, length, numberOfSeats)
     {
-        public float CylinderVolume { get { return cylinderVolume; } set { cylinderVolume = value; } }
+        public float CylinderVolume
+        {
+            get
+            {
+                return cylinderVolume;
+            }
+            set
+            {
+                cylinderVolume = value;
+            }
+        }
 
-        public FuelType FuelType { get { return fuelType; } set { fuelType = value; } }
+        public FuelType FuelType
+        {
+            get
+            {
+                return fuelType;
+            }
+            set
+            {
+                fuelType = value;
+            }
+        }
 
-        public int NumberOfEngines { get { return numberOfEngines; } set { numberOfEngines = value; } }
+        public int NumberOfEngines
+        {
+            get
+            {
+                return numberOfEngines;
+            }
+            set
+            {
+                numberOfEngines = value;
+            }
+        }
+
+        public override void Write()
+        {
+            base.Write();
+
+            Console.WriteLine($"Number of engines: {NumberOfEngines}");
+            Console.WriteLine($"Cylinder volumne: {CylinderVolume}");
+            Console.WriteLine($"Fuel type: {FuelType}");
+        }
     }
 }

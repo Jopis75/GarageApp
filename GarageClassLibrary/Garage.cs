@@ -138,11 +138,11 @@ namespace GarageClassLibrary
             var i = 0;
             for (; i < numberOfVehicles - 1; i++)
             {
-                WriteVehicle(vehicles[i] as MotorVehicle);
+                vehicles[i].Write();
                 Console.WriteLine();
             }
 
-            WriteVehicle(vehicles[i] as MotorVehicle);
+            vehicles[i].Write();
         }
 
         public void WriteVehicleTypeInfo(VehicleType vehicleType)

@@ -3,6 +3,7 @@ using GarageClassLibrary;
 using GarageClassLibrary.Enums;
 using GarageClassLibrary.Exceptions;
 using GarageClassLibrary.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var garage = HandleCreateGarage();
 
@@ -30,9 +31,9 @@ static IGarage HandleCreateGarage()
         {
             Vehicle[] vehicles =
             [
-                new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline),
-                new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline),
-                new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline)
+                new Car("ABC 12A", 4.0f, 4, 1, 2.0f, FuelType.Gasoline, 750.0f),
+                new Car("DEF 34B", 4.5f, 5, 1, 2.0f, FuelType.Gasoline, 750.0f),
+                new Truck("GHI 45C", 9.0f, 2, 1, 6.0f, FuelType.Gasoline, 40000.0f)
             ];
 
             var length = Math.Min(garage.NumberOfParkingSpaces, vehicles.Length);
@@ -203,7 +204,8 @@ static void HandleFindVehicle(IGarage garage)
                 var vehicle = garage.FindVehicle(registrationNumber);
 
                 Console.WriteLine();
-                Garage.WriteVehicle(vehicle as MotorVehicle);
+
+                vehicle.Write();
             }
             catch (VehicleNotFoundException ex)
             {
@@ -516,21 +518,50 @@ static void AddMotorVehicle(IGarage garage, MotorVehicleType motorVehicleType)
                     }
                 }
 
+                Vehicle? vehicle = null;
+
                 var length = ConsoleHelper.ReadFloat("Enter the length in meters (> 0.0): ");
                 var numberOfSeats = ConsoleHelper.ReadInt("Enter the number of seats (> 0): ");
                 var numberOfEngines = ConsoleHelper.ReadInt("Enter the number of engines (> 0): ");
                 var cylinderVolume = ConsoleHelper.ReadFloat("Enter the cylinder volume (> 0.0): ");
                 var fuelType = ConsoleHelper.ReadFuelType("Enter the fuel type ('Gasoline', 'Diesel'): ");
 
-                Vehicle vehicle = motorVehicleType switch
+                if (motorVehicleType == MotorVehicleType.Motorcycle)
                 {
-                    MotorVehicleType.Motorcycle => new Motorcycle(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType),
-                    MotorVehicleType.Car => new Car(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType),
-                    MotorVehicleType.Truck => new Truck(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType),
-                    MotorVehicleType.Bus => new Bus(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType),
-                    MotorVehicleType.Boat => new Boat(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType),
-                    MotorVehicleType.Airplane => new Airplane(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType)
-                };
+                    var seatHeight = ConsoleHelper.ReadFloat("Enter the seat height (> 0.0): ");
+
+                    vehicle = new Motorcycle(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, seatHeight);
+                }
+                else if (motorVehicleType == MotorVehicleType.Car)
+                {
+                    var maxTrailerWeight = ConsoleHelper.ReadFloat("Enter the maximum trailer weight (> 0.0): ");
+
+                    vehicle = new Car(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxTrailerWeight);
+                }
+                else if (motorVehicleType == MotorVehicleType.Truck)
+                {
+                    var maximumLoad = ConsoleHelper.ReadFloat("Enter the maximum load (> 0.0): ");
+
+                    vehicle = new Truck(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maximumLoad);
+                }
+                else if (motorVehicleType == MotorVehicleType.Bus)
+                {
+                    var numberOfPassengerSeats = ConsoleHelper.ReadInt("Enter the number of passenger seats (> 0): ");
+
+                    vehicle = new Bus(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, numberOfPassengerSeats);
+                }
+                else if (motorVehicleType == MotorVehicleType.Boat)
+                {
+                    var draft = ConsoleHelper.ReadFloat("Enter the draft (> 0.0): ");
+
+                    vehicle = new Boat(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, draft);
+                }
+                else if (motorVehicleType == MotorVehicleType.Airplane)
+                {
+                    var maxThrust = ConsoleHelper.ReadFloat("Enter the Max thrust (> 0.0): ");
+
+                    vehicle = new Airplane(registrationNumber, length, numberOfSeats, numberOfEngines, cylinderVolume, fuelType, maxThrust);
+                }
 
                 try
                 {
