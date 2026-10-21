@@ -3,11 +3,21 @@ using GarageClassLibrary;
 using GarageClassLibrary.Enums;
 using GarageClassLibrary.Exceptions;
 using GarageClassLibrary.Interfaces;
-using System.Runtime.InteropServices;
 
-var garage = CreateGarage();
+try
+{
+    var garage = CreateGarage();
 
-HandleMainMenu(garage);
+    HandleMainMenu(garage);
+}
+catch (Exception ex)
+{
+    Console.WriteLine();
+    ConsoleHelper.WriteErrorLine($"An unexpected error has occurred: {ex.Message}");
+    Console.WriteLine();
+    Console.Write("Press any key to continue...");
+    Console.ReadKey();
+}
 
 static void HandleMainMenu(IGarage garage)
 {
@@ -22,6 +32,7 @@ static void HandleMainMenu(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -38,6 +49,7 @@ static void HandleAddVehicle(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -114,6 +126,7 @@ static void HandleRemoveVehicle(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -130,6 +143,7 @@ static void HandleFindVehicles(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -182,6 +196,7 @@ static void HandleListVehicles(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -254,6 +269,7 @@ static void HandleListVehicleTypes(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -315,6 +331,7 @@ static void ReadMainMenuSelection(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -385,6 +402,7 @@ static void ReadAddVehicleMenuSelection(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -403,7 +421,7 @@ static void ReadFindVehiclesMenuSelection(IGarage garage)
 
             Console.WriteLine();
 
-            Console.WriteLine("How do you want to find the vehicles?");
+            Console.WriteLine("How do you want to find the vehicle(s)?");
             Console.WriteLine();
 
             Console.WriteLine("1. Find by registration number.");
@@ -443,6 +461,7 @@ static void ReadFindVehiclesMenuSelection(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -655,6 +674,7 @@ static void AddVehicle(IGarage garage, VehicleType vehicleType)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -704,7 +724,7 @@ static void FindVehiclesByNumberOfSeats(IGarage garage)
 
                 if (foundVehicles.Length > 0)
                 {
-                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length} vehicles with number of seats '{numberOfSeats}'.");
+                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length}" + (foundVehicles.Length == 1 ? " vehicle": " vehicles") + $" with number of seats '{numberOfSeats}'.");
                     Console.WriteLine();
 
                     foreach (var foundVehicle in foundVehicles)
@@ -715,7 +735,7 @@ static void FindVehiclesByNumberOfSeats(IGarage garage)
                 }
                 else
                 {
-                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with number of seats '{numberOfSeats}'.");
+                    ConsoleHelper.WriteErrorLine($"Could not find any vehicles with number of seats '{numberOfSeats}'.");
                     Console.WriteLine();
                 }
 
@@ -735,6 +755,7 @@ static void FindVehiclesByNumberOfSeats(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -810,6 +831,7 @@ static void FindVehicleByRegistrationNumber(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -859,7 +881,7 @@ static void FindVehiclesByVehicleType(IGarage garage)
 
                 if (foundVehicles.Length > 0)
                 {
-                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length} vehicles with vehicle type '{vehicleType}'.");
+                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length}" + (foundVehicles.Length == 1 ? " vehicle" : " vehicles") + $" with vehicle type '{vehicleType}'.");
                     Console.WriteLine();
 
                     foreach (var foundVehicle in foundVehicles)
@@ -870,7 +892,7 @@ static void FindVehiclesByVehicleType(IGarage garage)
                 }
                 else
                 {
-                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with vehicle type '{vehicleType}'.");
+                    ConsoleHelper.WriteErrorLine($"Could not find any vehicles with vehicle type '{vehicleType}'.");
                     Console.WriteLine();
                 }
 
@@ -890,6 +912,7 @@ static void FindVehiclesByVehicleType(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
@@ -940,7 +963,7 @@ static void FindVehiclesByVehicleTypeAndFuelType(IGarage garage)
 
                 if (foundVehicles.Length > 0)
                 {
-                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length} vehicles with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
+                    ConsoleHelper.WriteInfoLine($"Found {foundVehicles.Length}" + (foundVehicles.Length == 1 ? " vehicle" : " vehicles") + $" with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
                     Console.WriteLine();
 
                     foreach (var foundVehicle in foundVehicles)
@@ -951,7 +974,7 @@ static void FindVehiclesByVehicleTypeAndFuelType(IGarage garage)
                 }
                 else
                 {
-                    ConsoleHelper.WriteInfoLine($"Could not find any vehicles with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
+                    ConsoleHelper.WriteErrorLine($"Could not find any vehicles with vehicle type '{vehicleType}' and fuel type '{fuelType}'.");
                     Console.WriteLine();
                 }
 
@@ -971,6 +994,7 @@ static void FindVehiclesByVehicleTypeAndFuelType(IGarage garage)
         Console.WriteLine();
         Console.Write("Press any key to continue...");
         Console.ReadKey();
+        throw;
     }
 }
 
